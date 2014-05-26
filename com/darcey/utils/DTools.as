@@ -493,6 +493,15 @@ package com.darcey.utils
 		
 		
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function centerDisplayObject(element:DisplayObject,containerWidth:Number,containerHeight:Number):void
+		{
+			element.x = ((containerWidth/2) - (element.width/2));
+			element.y = ((containerHeight/2) - (element.height/2));
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function centerStageX(stageWidth:Number,obj:DisplayObject,offset:Number=0,setWidth:Number=0):void

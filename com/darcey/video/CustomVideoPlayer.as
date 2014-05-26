@@ -2,9 +2,7 @@ package com.darcey.video
 {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	import com.darcey.debug.Ttrace;
-	import com.darcey.events.CustomEvent;
 	import com.darcey.utils.RemoveAllChildrenIn;
-	import com.darcey.video.CustomVideoPlayerClient;
 	
 	import flash.display.Sprite;
 	import flash.display.Stage;
@@ -26,6 +24,7 @@ package com.darcey.video
 		private var t:Ttrace;
 		
 		private var stageRef:Stage;
+		public var customClient:CustomVideoPlayerClient;
 		public var nc:NetConnection = new NetConnection();
 		public var ns:NetStream;
 		public var video:Video;
@@ -48,7 +47,7 @@ package com.darcey.video
 		public function CustomVideoPlayer(stageRef:Stage,src:String,videoW:Number=640,videoH:Number=480,autoPlay:Boolean=false,repeat:Boolean=true)
 		{
 			// Setup class specific tracer
-			t = new Ttrace(true);
+			t = new Ttrace(false);
 			t.ttrace("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
 			
 			
@@ -114,14 +113,21 @@ package com.darcey.video
 		
 		
 		
+		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function connectStream():void {
 			
 			ns = new NetStream(nc);
 			ns.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
-			ns.client = new CustomVideoPlayerClient();
+			
+			customClient = new CustomVideoPlayerClient();
+			//customClient.onMetaData = onMetaData.onMetaData;
+			
+			ns.client = customClient;
 			video.attachNetStream(ns);
 			ns.play(src);
+			
+			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -177,7 +183,7 @@ package com.darcey.video
 		
 		
 		
-		﻿// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function changeVideo(src:String):void
 		{
 			this.src = src;
@@ -208,6 +214,32 @@ package com.darcey.video
 		
 		
 		
+		public function dispose():void
+		{
+			t.ttrace("CustomVideoPlayer.dispose()");
+			new RemoveAllChildrenIn(this);
+			
+			try {
+				ns.close();
+				ns = null;
+			} catch (e:Error) {}
+			
+			try {
+				nc.close();
+				nc = null;
+			} catch (e:Error) {}
+			
+			try {
+				video.clear();
+				video = null;
+			} catch (e:Error) {}
+			
+			
+			try {
+				//client.removeEventListener("playback complete",playbackComplete);
+				//client = null;
+			} catch (e:Error) {}
+		}
 		
 		
 		/*
@@ -429,6 +461,13 @@ package com.darcey.video
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 	*/
+	
+		
+		
+		
+		
+		
+		
 		
 	}
 }

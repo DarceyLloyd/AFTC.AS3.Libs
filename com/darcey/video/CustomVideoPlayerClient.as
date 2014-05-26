@@ -2,6 +2,7 @@ package com.darcey.video
 {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	import com.darcey.debug.Ttrace;
+	import com.darcey.events.CustomEvent;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -108,6 +109,8 @@ package com.darcey.video
 		{
 			t.ttrace("VideoPlayerCustomClient.onCuePoint(o): " + o);
 			t.ttrace("cuepoint: time=" + o.time + " name=" + o.name + " type=" + o.type);
+			
+			dispatchEvent( new CustomEvent("CuePoint",o) );
 		}  
 		
 		
