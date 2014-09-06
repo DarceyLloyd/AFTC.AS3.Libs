@@ -30,7 +30,7 @@ package com.darcey.gfx
 		
 		
 		// ---------------------------------------------------------------------------------------------------------------------------
-		public static function of(target:DisplayObject,w:Number = 0, h:Number = 0):Bitmap
+		public static function ofDisplayObject(target:DisplayObject,w:Number = 0, h:Number = 0):Bitmap
 		{
 			if (w==0 || h == 0){
 				bmpData = new BitmapData( target.width, target.height );

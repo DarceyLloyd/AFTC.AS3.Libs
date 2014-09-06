@@ -7,18 +7,12 @@ package com.darcey.utils
 	//import away3d.core.base.SubGeometry;
 	//import away3d.entities.Mesh;
 	
-	import com.greensock.TweenLite;
-	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
-	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
-	import flash.events.Event;
-	import flash.events.EventDispatcher;
 	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
@@ -34,6 +28,48 @@ package com.darcey.utils
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public class DTools
 	{
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function randomNumber(min:Number, max:Number):Number
+		{
+			return Math.floor(Math.random() * (1 + max - min) + min);	
+		}
+		public static function getRandomNumber(min:Number, max:Number):Number { return randomNumber(min,max); }
+		public static function generateRandomNumber(min:Number, max:Number):Number { return randomNumber(min,max); }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function setScale(displayObject:DisplayObject,scale:Number=1.5):void
+		{
+			displayObject.scaleX = displayObject.scaleY = scale;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function cropBitmapData(sourceBitmapData:BitmapData, startPoint:Point, width:Number, height:Number):BitmapData
+		{
+			var croppedBD:BitmapData = new BitmapData(width, height);
+			croppedBD.copyPixels(sourceBitmapData, new Rectangle(startPoint.x, startPoint.y, width, height), new Point(0, 0));
+			return croppedBD.clone();
+			croppedBD.dispose();
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function isDivisibleBy(number:Number,divisibleBy:Number):Boolean
+		{
+			if (number%divisibleBy == 0){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function toggleFullScreen(s:Stage):void
@@ -214,7 +250,7 @@ package com.darcey.utils
 		{
 			trace("#### DTools.waitAndCallBack(delayInSeconds:"+delayInSeconds+", functionToCallBack)");
 			
-			callBackTime = delayInSeconds * 1000;
+			callBackTime = delayInSeconds * 800;
 			callBackFunction = functionToCallBack;
 			callBackTimer = new Timer(delayInSeconds*callBackTime);
 			callBackTimer.addEventListener(TimerEvent.TIMER,waitAndCallBackTimerComplete);
@@ -223,6 +259,7 @@ package com.darcey.utils
 		}
 		public static function waitAndCallBackTimerComplete(e:TimerEvent):void
 		{
+			trace("#### DTools.waitAndCallBack(callBackFunction:"+callBackFunction+"): COMPLETE");
 			callBackTimer.stop();
 			
 			try {
