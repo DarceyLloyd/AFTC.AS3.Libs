@@ -27,16 +27,16 @@ package com.greensock.layout {
  * and set the <code>preview</code> property to <code>true</code> in order to see the area on the stage
  * (or simply use it like a regular Shape by adding it to the display list with <code>addChild()</code>, but the 
  * <code>preview</code> property makes it simpler because it automatically ensures that it is behind 
- * all of its attached DisplayObjects in the stacking order).<br /><br />
+ * all of its attached DisplayObjects in the stacking order).
  * 
- * You can set minimum and maximum width/height constraints on a LiquidArea so that stage
- * resizes don't expand or contract it beyond certain values.<br /><br />
+ * <p>You can set minimum and maximum width/height constraints on a LiquidArea so that stage
+ * resizes don't expand or contract it beyond certain values.</p>
  * 
- * With LiquidArea, it's simple to create things like a background that proportionally 
+ * <p>With LiquidArea, it's simple to create things like a background that proportionally 
  * fills the stage or a bar that always stretches horizontally to fill the stage but stays stuck 
- * to the bottom, etc.<br /><br />
+ * to the bottom, etc.</p>
  * 
- * @example Example AS3 code:<listing version="3.0">
+ * <listing version="3.0">
 import com.greensock.layout.~~;
 
 //create a LiquidStage instance for the current stage which was built at an original size of 550x400
@@ -59,11 +59,11 @@ function onAreaUpdate(event:Event):void {
 }
 </listing>
  * 
- * LiquidArea is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ * <p>LiquidArea is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
  * You must have a valid membership to use this class without violating the terms of use. Visit 
- * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.<br /><br />
+ * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.</p>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a>.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -251,7 +251,7 @@ function onAreaUpdate(event:Event):void {
 			}
 			if (tweenDuration > 0) {
 				_tween = _originalTween = dynamicTween(tweenDuration, tweenVars || {});
-				_tween.setEnabled(false, false);
+				_tween._enabled(false, false);
 			}
 			_strictMode = strict;
 			_topLeftPin = topLeft;
@@ -350,10 +350,10 @@ function onAreaUpdate(event:Event):void {
 					_tween.invalidate();
 					_tween.restart(true, true);
 				} else {
-					var oldTime:Number = _tween.currentTime;
+					var oldTime:Number = _tween.time();
 					_tween.restart(false, true);
 					_tween.invalidate();
-					_tween.currentTime = oldTime;
+					_tween.time( oldTime );
 				}
 				_tweenMode = true;
 				

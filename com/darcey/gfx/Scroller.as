@@ -35,8 +35,8 @@ package com.darcey.gfx
 		private var container:Sprite;
 		private var mask:Sprite;
 		
-		private var scrollSpeedX:Number = 1;
-		private var scrollSpeedY:Number = 1;
+		public var scrollSpeedX:Number = 1;
+		public var scrollSpeedY:Number = 1;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
@@ -128,11 +128,11 @@ package com.darcey.gfx
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function blitScroll(e:Event):void
 		{
-			if (scrollSpeedX>0){
+			if (scrollSpeedX != 0){
 				bmp1.x += scrollSpeedX;
 			}
 			
-			if (scrollSpeedY>0){
+			if (scrollSpeedY != 0){
 				bmp1.y += scrollSpeedY;
 			}
 		}

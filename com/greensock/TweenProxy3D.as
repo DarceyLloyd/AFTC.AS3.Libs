@@ -1,14 +1,15 @@
 ﻿/**
- * VERSION: 0.95
- * DATE: 9/22/2009
+ * VERSION: 0.951
+ * DATE: 2012-01-05
  * AS3
- * UPDATES AND DOCUMENTATION AT: http://blog.greensock.com/
+ * UPDATES AND DOCUMENTATION AT: http://www.greensock.com/
  **/
 package com.greensock {
 	import flash.display.*;
 	import flash.events.Event;
 	import flash.geom.*;
 	import flash.utils.*;
+
 /**
  *  TweenProxy3D essentially "stands in" for a DisplayObject, so you set the various properties of 
  * 	the TweenProxy3D and in turn, it handles setting the corresponding properties of the DisplayObject
@@ -84,13 +85,13 @@ package com.greensock {
  * 	myProxy.registration = new Vector3D(100, 100, 100);<br />
  * 	TweenLite.to(myProxy, 3, {skewX:30, scale:0.5, ease:Elastic.easeOut});<br /><br /></code>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2008-2014, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
 	dynamic public class TweenProxy3D extends Proxy {
 		/** @private **/
-		public static const VERSION:Number = 0.94;
+		public static const VERSION:Number = 0.951;
 		/** @private **/
 		private static const _DEG2RAD:Number = Math.PI / 180; //precompute for speed
 		/** @private **/
@@ -533,6 +534,11 @@ package com.greensock {
 			if (_rotationZ != 0) {
 				m.appendRotation(_rotationZ, Vector3D.Z_AXIS);
 			}
+			
+			if (Math.abs(m.determinant) < 0.000000009) { //a bug in Flash Player 11 caused runtime errors in very rare situations like skewX:30, rotationX:30, rotationY:110, rotationZ:60. Since try...catch blocks kill performance, we check the determinant instead (it only chokes when the determinant is very very small).
+				return;
+			}
+			
 			_target.transform.matrix3D = m;
 			reposition();
 			

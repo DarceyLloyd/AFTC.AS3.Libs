@@ -1,57 +1,57 @@
 /**
- * VERSION: 2.12
- * DATE: 2011-02-22
+ * VERSION: 12.1.2
+ * DATE: 2013-12-20
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com
  **/
 package com.greensock.plugins {
-	import com.greensock.*;
-	import com.greensock.core.*;
+	import com.greensock.TweenLite;
 	
-	import flash.display.*;
+	import flash.display.DisplayObject;
+	import flash.display.Sprite;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import flash.utils.getDefinitionByName;
 /**
- * Normally, all transformations (scale, rotation, and position) are based on the DisplayObject's registration
+ * [AS3/AS2 only] Normally, all transformations (scale, rotation, and position) are based on the DisplayObject's registration
  * point (most often its upper left corner), but TransformAroundPoint allows you to define ANY point around which
  * 2D transformations will occur during the tween. For example, you may have a dynamically-loaded image that you 
  * want to scale from its center or rotate around a particular point on the stage. <br /><br />
  * 
- * If you define an x or y value in the transformAroundPoint object, it will correspond to the custom registration
+ * <p>If you define an x or y value in the transformAroundPoint object, it will correspond to the custom registration
  * point which makes it easy to position (as opposed to having to figure out where the original registration point 
  * should tween to). If you prefer to define the x/y in relation to the original registration point, do so outside 
- * the transformAroundPoint object, like: <br /><br /><code>
+ * the transformAroundPoint object, like: </p><p><code>
  * 
- * TweenLite.to(mc, 3, {x:50, y:40, transformAroundPoint:{point:new Point(200, 300), scale:0.5, rotation:30}});<br /><br /></code>
+ * TweenLite.to(mc, 3, {x:50, y:40, transformAroundPoint:{point:new Point(200, 300), scale:0.5, rotation:30}});</code></p>
  * 
- * To define the <code>point</code> according to the target's local coordinates (as though it is inside the target),
- * simply pass <code>pointIsLocal:true</code> in the transformAroundPoint object, like:<br /><br /><code>
+ * <p>To define the <code>point</code> according to the target's local coordinates (as though it is inside the target),
+ * simply pass <code>pointIsLocal:true</code> in the transformAroundPoint object, like:</p><p><code>
  * 
- * TweenLite.to(mc, 3, {transformAroundPoint:{point:new Point(200, 300), pointIsLocal:true, scale:0.5, rotation:30}});<br /><br /></code>
+ * TweenLite.to(mc, 3, {transformAroundPoint:{point:new Point(200, 300), pointIsLocal:true, scale:0.5, rotation:30}});</code></p>
  * 
- * TransformAroundPointPlugin is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ * <p>TransformAroundPointPlugin is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
  * You must have a valid membership to use this class without violating the terms of use. Visit 
- * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details. <br /><br />
+ * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details. </p>
  * 
- * <b>USAGE:</b><br /><br />
- * <code>
- * 		import com.greensock.TweenLite; <br />
- * 		import com.greensock.plugins.TweenPlugin; <br />
- * 		import com.greensock.plugins.TransformAroundPointPlugin; <br />
- * 		TweenPlugin.activate([TransformAroundPointPlugin]); //activation is permanent in the SWF, so this line only needs to be run once.<br /><br />
+ * <p><b>USAGE:</b></p>
+ * <listing version="3.0">
+import com.greensock.TweenLite; 
+import com.greensock.plugins.TweenPlugin; 
+import com.greensock.plugins.TransformAroundPointPlugin; 
+TweenPlugin.activate([TransformAroundPointPlugin]); //activation is permanent in the SWF, so this line only needs to be run once.
+
+TweenLite.to(mc, 1, {transformAroundPoint:{point:new Point(100, 300), scaleX:2, scaleY:1.5, rotation:150}}); 
+</listing>
  * 
- * 		TweenLite.to(mc, 1, {transformAroundPoint:{point:new Point(100, 300), scaleX:2, scaleY:1.5, rotation:150}}); <br /><br />
- * </code>
- * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><b>Copyright 2008-2014, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */
 	public class TransformAroundPointPlugin extends TweenPlugin {
 		/** @private **/
-		public static const API:Number = 1.0; //If the API/Framework for plugins changes in the future, this number helps determine compatibility
+		public static const API:Number = 2; //If the API/Framework for plugins changes in the future, this number helps determine compatibility
 		/** @private **/
 		private static var _classInitted:Boolean;
 		/** @private **/
@@ -65,6 +65,8 @@ package com.greensock.plugins {
 		protected var _point:Point;
 		/** @private **/
 		protected var _shortRotation:ShortRotationPlugin;
+		/** @private **/
+		protected var _pointIsLocal:Boolean;
 		
 		/** @private **/
 		protected var _proxy:DisplayObject;
@@ -72,27 +74,38 @@ package com.greensock.plugins {
 		protected var _proxySizeData:Object;
 		/** @private **/
 		protected var _useAddElement:Boolean;
+		/** @private **/
+		protected var _xRound:Boolean;
+		/** @private **/
+		protected var _yRound:Boolean;
 		
 		/** @private **/
 		public function TransformAroundPointPlugin() {
-			super();
-			this.propName = "transformAroundPoint";
-			this.overwriteProps = ["x","y"];
-			this.priority = -1; //so that the x/y tweens occur BEFORE the transformAroundPoint is applied
+			super("transformAroundPoint,transformAroundCenter,x,y", -1); // lower priority so that the x/y tweens occur BEFORE the transformAroundPoint is applied
+		}
+		
+		private static function _applyMatrix(p:Point, m:Matrix):Point {
+			return new Point(p.x * m.a + p.y * m.c + m.tx, p.x * m.b + p.y * m.d + m.ty);
 		}
 		
 		/** @private **/
-		override public function onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
+		override public function _onInitTween(target:Object, value:*, tween:TweenLite):Boolean {
 			if (!(value.point is Point)) {
 				return false;
 			}
 			_target = target as DisplayObject;
+			var m:Matrix = _target.transform.matrix;
+			var matrixCopy:Matrix;
+			
 			if (value.pointIsLocal == true) {
+				_pointIsLocal = true;
 				_local = value.point.clone();
-				_point = _target.parent.globalToLocal(_target.localToGlobal(_local));
+				_point = _applyMatrix(_local, m);
 			} else {
 				_point = value.point.clone();
-				_local = _target.globalToLocal(_target.parent.localToGlobal(_point));
+				matrixCopy = m.clone();
+				matrixCopy.invert();
+				_local = _applyMatrix(_point, matrixCopy);
 			}
 			
 			if (!_classInitted) {
@@ -105,7 +118,6 @@ package com.greensock.plugins {
 			}
 			
 			if ((!isNaN(value.width) || !isNaN(value.height)) && _target.parent != null) {
-				var m:Matrix = _target.transform.matrix;
 				var point:Point = _target.parent.globalToLocal(_target.localToGlobal(new Point(100, 100)));
 				_target.width *= 2;
 				if (point.x == _target.parent.globalToLocal(_target.localToGlobal(new Point(100, 100))).x) { //checks to see if the width change also alters where the 100,100 point is in the parent, essentially telling us whether or not the width change also effectively changed the scale, but we can't just check the scaleX because rotation would affect it and there are some inconsistencies in the way Adobe's classes/components work.
@@ -113,10 +125,10 @@ package com.greensock.plugins {
 					_target.rotation = 0;
 					_proxySizeData = {};
 					if (!isNaN(value.width)) {
-						addTween(_proxySizeData, "width", _target.width / 2, value.width, "width"); //Components that alter their width without scaling will treat their width/height setters as though they were applied without any rotation, so we must handle these separately. If we just allow the width/height tweens to affect the Sprite and copy those values over to the _proxy, it won't behave properly.
+						_addTween(_proxySizeData, "width", _target.width / 2, value.width, "width"); //Components that alter their width without scaling will treat their width/height setters as though they were applied without any rotation, so we must handle these separately. If we just allow the width/height tweens to affect the Sprite and copy those values over to the _proxy, it won't behave properly.
 					}
 					if (!isNaN(value.height)) {
-						addTween(_proxySizeData, "height", _target.height, value.height, "height");
+						_addTween(_proxySizeData, "height", _target.height, value.height, "height");
 					}
 					var b:Rectangle = _target.getBounds(_target);
 					var s:Sprite = new Sprite();
@@ -147,23 +159,23 @@ package com.greensock.plugins {
 					//ignore - we already set it above
 				} else if (p == "shortRotation") {
 					_shortRotation = new ShortRotationPlugin();
-					_shortRotation.onInitTween(_target, value[p], tween);
-					addTween(_shortRotation, "changeFactor", 0, 1, "shortRotation");
+					_shortRotation._onInitTween(_target, value[p], tween);
+					_addTween(_shortRotation, "setRatio", 0, 1, "shortRotation");
 					for (sp in value[p]) {
-						this.overwriteProps[this.overwriteProps.length] = sp;
+						_overwriteProps[_overwriteProps.length] = sp;
 					}
 				} else if (p == "x" || p == "y") {
-					addTween(_point, p, _point[p], value[p], p);
+					_addTween(_point, p, _point[p], value[p], p);
 				} else if (p == "scale") {
-					addTween(_target, "scaleX", _target.scaleX, value.scale, "scaleX");
-					addTween(_target, "scaleY", _target.scaleY, value.scale, "scaleY");
-					this.overwriteProps[this.overwriteProps.length] = "scaleX";
-					this.overwriteProps[this.overwriteProps.length] = "scaleY";
+					_addTween(_target, "scaleX", _target.scaleX, value.scale, "scaleX");
+					_addTween(_target, "scaleY", _target.scaleY, value.scale, "scaleY");
+					_overwriteProps[_overwriteProps.length] = "scaleX";
+					_overwriteProps[_overwriteProps.length] = "scaleY";
 				} else if ((p == "width" || p == "height") && _proxy != null) {
 					//let the proxy handle width/height
 				} else {
-					addTween(_target, p, _target[p], value[p], p);
-					this.overwriteProps[this.overwriteProps.length] = p;
+					_addTween(_target, p, _target[p], value[p], p);
+					_overwriteProps[_overwriteProps.length] = p;
 				}
 			}
 			
@@ -172,20 +184,20 @@ package com.greensock.plugins {
 				if ("x" in enumerables || "y" in enumerables) { //if the tween is supposed to affect x and y based on the original registration point, we need to make special adjustments here...
 					var endX:Number, endY:Number;
 					if ("x" in enumerables) {
-						endX = (typeof(enumerables.x) == "number") ? enumerables.x : _target.x + Number(enumerables.x);
+						endX = (typeof(enumerables.x) == "number") ? enumerables.x : _target.x + Number(enumerables.x.split("=").join(""));
 					}
 					if ("y" in enumerables) {
-						endY = (typeof(enumerables.y) == "number") ? enumerables.y : _target.y + Number(enumerables.y);
+						endY = (typeof(enumerables.y) == "number") ? enumerables.y : _target.y + Number(enumerables.y.split("=").join(""));
 					}
-					tween.killVars({x:true, y:true}, false); //we're taking over.
-					this.changeFactor = 1;
+					tween._kill({x:true, y:true, _tempKill:true}, _target); //we're taking over.
+					this.setRatio(1);
 					if (!isNaN(endX)) {
-						addTween(_point, "x", _point.x, _point.x + (endX - _target.x), "x");
+						_addTween(_point, "x", _point.x, _point.x + (endX - _target.x), "x");
 					}
 					if (!isNaN(endY)) {
-						addTween(_point, "y", _point.y, _point.y + (endY - _target.y), "y");
+						_addTween(_point, "y", _point.y, _point.y + (endY - _target.y), "y");
 					}
-					this.changeFactor = 0;
+					this.setRatio(0);
 				}
 			}
 			
@@ -193,18 +205,30 @@ package com.greensock.plugins {
 		}
 		
 		/** @private **/
-		override public function killProps(lookup:Object):void {
+		override public function _kill(lookup:Object):Boolean {
 			if (_shortRotation != null) {
-				_shortRotation.killProps(lookup);
-				if (_shortRotation.overwriteProps.length == 0) {
+				_shortRotation._kill(lookup);
+				if (_shortRotation._overwriteProps.length == 0) {
 					lookup.shortRotation = true;
 				}
 			}
-			super.killProps(lookup);
+			return super._kill(lookup);
 		}
 		
 		/** @private **/
-		override public function set changeFactor(n:Number):void {
+		override public function _roundProps(lookup:Object, value:Boolean=true):void {
+			if ("transformAroundPoint" in lookup) {
+				_xRound = _yRound = value;
+			} else if ("x" in lookup) {
+				_xRound = value;
+			} else if ("y" in lookup) {
+				_yRound = value;
+			}
+		}
+		
+		/** @private **/
+		override public function setRatio(v:Number):void {
+			var p:Point, m:Matrix, x:Number, y:Number, val:Number;
 			if (_proxy != null && _proxy.parent != null) {
 				if (_useAddElement) {
 					Object(_proxy.parent).addElement(_target.parent);
@@ -212,56 +236,43 @@ package com.greensock.plugins {
 					_proxy.parent.addChild(_target.parent);
 				}
 			}
-			var val:Number, x:Number, y:Number;
-			if (_target.parent) {
-				var p:Point, pt:PropTween, i:int = _tweens.length;
-				if (this.round) {
-					while (--i > -1) {
-						pt = _tweens[i];
-						val = pt.start + (pt.change * n);
-						pt.target[pt.property] = (val > 0) ? int(val + 0.5) : int(val - 0.5); //4 times as fast as Math.round()
-					}
-					p = _target.parent.globalToLocal(_target.localToGlobal(_local));
-					x = _target.x + _point.x - p.x;
-					y = _target.y + _point.y - p.y;
-					_target.x = (x > 0) ? int(x + 0.5) : int(x - 0.5); //4 times as fast as Math.round()
-					_target.y = (y > 0) ? int(y + 0.5) : int(y - 0.5); //4 times as fast as Math.round()
-				} else {
-					while (--i > -1) {
-						pt = _tweens[i];
-						pt.target[pt.property] = pt.start + (pt.change * n);
-					}
-					p = _target.parent.globalToLocal(_target.localToGlobal(_local));
-					_target.x += _point.x - p.x;
-					_target.y += _point.y - p.y;
+			if (_pointIsLocal) {
+				p = _applyMatrix(_local, _target.transform.matrix);
+				if (Math.abs(p.x - _point.x) > 0.5 || Math.abs(p.y - _point.y) > 0.5) {  //works around some rounding errors in Flash
+					_point = p;
 				}
 			}
-			_changeFactor = n;
-			if (_proxy != null && _proxy.parent != null) {
+			super.setRatio(v);
+			m = _target.transform.matrix;
+			x = _local.x * m.a + _local.y * m.c + m.tx;
+			y = _local.x * m.b + _local.y * m.d + m.ty;
+			_target.x = (!_xRound) ? _target.x + _point.x - x : ((val = _target.x + _point.x - x) > 0) ? (val + 0.5) >> 0 : (val - 0.5) >> 0;
+			_target.y = (!_yRound) ? _target.y + _point.y - y : ((val = _target.y + _point.y - y) > 0) ? (val + 0.5) >> 0 : (val - 0.5) >> 0;
+			
+			if (_proxy != null) {
 				var r:Number = _target.rotation;
 				_proxy.rotation = _target.rotation = 0;
-				if (_proxySizeData.width != undefined) {
+				if (_proxySizeData.width != null) {
 					_proxy.width = _target.width = _proxySizeData.width;
 				}
-				if (_proxySizeData.height != undefined) {
+				if (_proxySizeData.height != null) {
 					_proxy.height = _target.height = _proxySizeData.height;
 				}
 				_proxy.rotation = _target.rotation = r;
 				
-				p = _target.parent.globalToLocal(_target.localToGlobal(_local));
-				x = _target.x + _point.x - p.x;
-				y = _target.y + _point.y - p.y;
-				if (this.round) {
-					_proxy.x = (x > 0) ? int(x + 0.5) : int(x - 0.5); //4 times as fast as Math.round()
-					_proxy.y = (y > 0) ? int(y + 0.5) : int(y - 0.5); //4 times as fast as Math.round()
-				} else {
-					_proxy.x = x;
-					_proxy.y = y;
-				}
-				if (_useAddElement) {
-					Object(_proxy.parent).removeElement(_target.parent);
-				} else {
-					_proxy.parent.removeChild(_target.parent);
+				m = _target.transform.matrix;
+				x = _local.x * m.a + _local.y * m.c + m.tx;
+				y = _local.x * m.b + _local.y * m.d + m.ty;
+				
+				_proxy.x = (!_xRound) ? _target.x + _point.x - x : ((val = _target.x + _point.x - x) > 0) ? (val + 0.5) >> 0 : (val - 0.5) >> 0;
+				_proxy.y = (!_yRound) ? _target.y + _point.y - y : ((val = _target.y + _point.y - y) > 0) ? (val + 0.5) >> 0 : (val - 0.5) >> 0;
+				
+				if (_proxy.parent != null) {
+					if (_useAddElement) {
+						Object(_proxy.parent).removeElement(_target.parent);
+					} else {
+						_proxy.parent.removeChild(_target.parent);
+					}
 				}
 			}
 		}

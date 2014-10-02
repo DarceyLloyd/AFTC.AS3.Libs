@@ -2,24 +2,28 @@
  * VERSION: 1.01
  * DATE: 7/15/2009
  * AS3 (AS2 is also available)
- * UPDATES AND DOCUMENTATION AT: http://blog.greensock.com/customease/
+ * UPDATES AND DOCUMENTATION AT: http://www.greensock.com/customease/
  **/
 package com.greensock.easing {
 /**
- * 	Facilitates creating custom bezier eases with the GreenSock Custom Ease Builder tool. It's essentially
+ * 	[AS3/AS2 only] Facilitates creating custom bezier eases with the GreenSock Custom Ease Builder tool. It's essentially
  *  a place to store the bezier segment information for each ease instead of recreating it inside each
  *  function call which would slow things down. Please use the interactive tool available at 
  *  <a href="http://blog.greensock.com/customease/">http://blog.greensock.com/customease/</a> 
  * to generate the necessary code.<br /><br />
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><strong>Copyright 2008-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
 	public class CustomEase {
+		/** @private **/
 		public static const VERSION:Number = 1.01;
+		/** @private **/
 		private static var _all:Object = {}; //keeps track of all CustomEase instances.
+		/** @private **/
 		private var _segments:Array;
+		/** @private **/
 		private var _name:String;
 		
 		public static function create(name:String, segments:Array):Function {

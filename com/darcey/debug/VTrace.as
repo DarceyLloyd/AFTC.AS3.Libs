@@ -18,7 +18,6 @@ Usage:
 package com.darcey.debug
 {
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-	import com.darcey.debug.Ttrace;
 	import com.darcey.utils.RemoveAllChildrenIn;
 	
 	import flash.display.Sprite;
@@ -191,13 +190,18 @@ package com.darcey.debug
 			if (!txtTitle){
 				txtTitle = new TextField();
 				txtTitle.autoSize = TextFieldAutoSize.LEFT;
+				txtTitle.border = true;
 				txtTitle.x = 25;
 				txtTitle.y = 2;
+				txtTitle.defaultTextFormat = tfTitle;
 				addChild(txtTitle);
 			}
-			if (p1 != null && p2 != null){
+			
+			//trace("### p1 = " + p1 + " ### p2 = "+ p2);
+			
+			if (p1 != "" && p2 != ""){
 				txtTitle.text = caller + "." + p1 + "." + p2 + " = ";
-			} else if (p1 != null && p2 == null){
+			} else if (p1 != "" && p2 == ""){
 				txtTitle.text = caller + "." + p1 + " = ";
 			}
 			txtTitle.setTextFormat(tfTitle);
@@ -239,10 +243,13 @@ package com.darcey.debug
 			dragBox.graphics.drawRect(0,0,20,27);
 			dragBox.graphics.endFill();
 			
+			var bgWidth:Number = txtTitle.width + txtValue.width + 30;
+			//trace("this.width = " + this.width + "  txtTitle.width = "+ txtTitle.width + "  txtValue.width = " + txtValue.width + "   bgWidth = " + bgWidth);
+			
 			this.graphics.clear();
 			this.graphics.beginFill(0xFFFFFF,1);
 			this.graphics.lineStyle(1,0x000066);
-			this.graphics.drawRect(0,0,this.width+5,24);
+			this.graphics.drawRect(0,0,bgWidth,24);
 			this.graphics.endFill();
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

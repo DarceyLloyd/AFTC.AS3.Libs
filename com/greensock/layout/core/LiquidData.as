@@ -18,7 +18,7 @@ package com.greensock.layout.core {
  * attached to a LiquidStage, but this class is only intended to be used by LiquidStage
  * internally - there is no reason to use it directly. 
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <b>Copyright 2014, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
@@ -69,7 +69,7 @@ package com.greensock.layout.core {
 				}
 				tweenVars.overwrite = false;
 				this.tween = new TweenLite(this.target, tweenDuration, tweenVars);
-				this.tween.setEnabled(false, false);
+				this.tween._enabled(false, false);
 			}
 			this.liquidStage = liquidStage; //LiquidStage.getByStage(this.target.stage);
 			this.type = type;

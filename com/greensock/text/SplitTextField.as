@@ -26,9 +26,9 @@ package com.greensock.text {
  * x- or y-axis, which can be useful if, for example, you want to be able to scale the whole 
  * SplitTextField from its center instead of its upper left corner. Use an onComplete in your
  * tween to call the SplitTextField's <code>deactivate()</code> or <code>destroy()</code> method 
- * which will swap the original TextField back into place. <br /><br />
+ * which will swap the original TextField back into place. 
  * 
- * @example Example AS3 code:<listing version="3.0">
+ * <listing version="3.0">
 import com.greensock.text.SplitTextField;
 import com.greensock.TweenMax;
 import com.greensock.easing.Elastic;
@@ -39,7 +39,7 @@ import flash.geom.Point;
 var stf1:SplitTextField = new SplitTextField(myTextField1);
 
 //tween each character down from 100 pixels above while fading in, and offset the start times by 0.05 seconds
-TweenMax.allFrom(stf1.textFields, 1, {y:"-100", autoAlpha:0, ease:Elastic.easeOut}, 0.05);
+TweenMax.staggerFrom(stf1.textFields, 1, {y:"-=100", autoAlpha:0, ease:Elastic.easeOut}, 0.05);
 
 //split myTextField2 by words
 var stf2:SplitTextField = new SplitTextField(myTextField2, SplitTextField.TYPE_WORDS);
@@ -57,11 +57,11 @@ while (i--) {
 var stf3:SplitTextField = new SplitTextField(myTextField3, SplitTextField.TYPE_LINES);
 
 //slide each line in from the right, fading it in over 1 second and staggering the start times by 0.5 seconds. Then swap the original TextField back in.
-TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0, onComplete:stf3.deactivate}, 0.5);
+TweenMax.staggerFrom(stf3.textFields, 1, {x:"+=200", autoAlpha:0, onComplete:stf3.deactivate}, 0.5);
 
 </listing>
  * 
- * <b>NOTES / LIMITATIONS</b><br />
+ * <p><strong>NOTES / LIMITATIONS</strong></p>
  * <ul>
  * 		<li>Does not recognize "Auto kern" feature in Flash.</li>
  * 		<li>Positioning may be incorrect when non-standard anti-aliasing is used (like "anti-alias for readability"). Even with standard anti-aliasing, depending on the specific font you use positioning may be <i>slightly</i> off.</li>
@@ -72,13 +72,13 @@ TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0, onComplete:stf3.deac
  * 			the actual text. For example, set the <code>width, height, embedFonts, autoSize, multiline,</code> and 
  * 			other properties before setting the <code>text</code> property.</li>
  * 		<li>Not intended for use in Flex (use FlexSplitTextField instead)</li>
- * </ul><br />
+ * </ul>
  * 
- * SplitTextField is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ * <p>SplitTextField is a <a href="http://www.greensock.com/club/">Club GreenSock</a> membership benefit. 
  * You must have a valid membership to use this class without violating the terms of use. Visit 
- * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details. <br /><br />
+ * <a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or to get more details. </p>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -108,7 +108,7 @@ TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0, onComplete:stf3.deac
 		public var textFields:Array;
 		
 		/**
-		 * Constructor.
+		 * Constructor
 		 * 
 		 * @param source The source TextField that should be split apart. Remember, this TextField will be replaced in the display list with the SplitTextField (which is essentially a Sprite containing the various resulting TextFields).
 		 * @param splitType Determines the way in which the TextField is split apart - either by characters, words, or lines. Use the <code>TYPE_CHARACTERS, TYPE_WORDS,</code> and <code>TYPE_LINES</code> constants.

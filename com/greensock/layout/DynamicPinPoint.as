@@ -15,23 +15,23 @@ package com.greensock.layout {
  * DynamicPinPoint allows you to associate a function (one you define) that returns a Point instance
  * that will determine the DynamicPinPoint's x/y values. For example, to make the DynamicPinPoint
  * position itself at the center bottom of the "video_mc" object and then attach a "mc" object, 
- * you could do this: <br /><br /><code>
+ * you could do this: 
  * 
- * var pin:DynamicPinPoint = new DynamicPinPoint(video_mc, getBottomCenter); <br />
- * pin.attach(mc);<br />
- * function getBottomCenter():Point {<br />
- * 		var bounds:Rectangle = video_mc.getBounds(video_mc);<br />
- * 		return new Point(bounds.x + bounds.width / 2, bounds.y + bounds.height);<br />
- * }<br /><br />
+ * <listing version="3.0">
+var pin:DynamicPinPoint = new DynamicPinPoint(video_mc, getBottomCenter); 
+pin.attach(mc);
+function getBottomCenter():Point {
+	var bounds:Rectangle = video_mc.getBounds(video_mc);
+	return new Point(bounds.x + bounds.width / 2, bounds.y + bounds.height);
+}
+
+//if you want to initially position the "mc" object directly on the DynamicPinPoint, you could add this:
+var p:Point = pin.toLocal(mc.parent);
+mc.x = p.x;
+mc.y = p.y;
+</listing>
  * 
- * //if you want to initially position the "mc" object directly on the DynamicPinPoint, you could add this:<br />
- * var p:Point = pin.toLocal(mc.parent);<br />
- * mc.x = p.x;<br />
- * mc.y = p.y;<br />
- * 
- * <br /><br /></code>
- * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 

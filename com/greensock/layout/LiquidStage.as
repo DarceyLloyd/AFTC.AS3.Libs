@@ -1,6 +1,6 @@
 ﻿/**
- * VERSION: 2.13
- * DATE: 2011-07-14
+ * VERSION: 2.14
+ * DATE: 2013-01-22
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com/liquidstage/
  **/
@@ -21,14 +21,14 @@ package com.greensock.layout {
  * so that when the stage is resized, they are repositioned and maintain their relative distance from
  * the PinPoint. For example, you could make a logo Sprite stay in the bottom right corner when the stage is resized.
  * 
- * You can also scale or stretch DisplayObjects using the LiquidArea class which allows you to define a rectangular
+ * <p>You can also scale or stretch DisplayObjects using the LiquidArea class which allows you to define a rectangular
  * area that expands and contracts as the stage resizes, and you attach DisplayObjects so that they
  * fill the area, scaling in any of the following modes: <code>STRETCH, PROPORTIONAL_INSIDE, PROPORTIONAL_OUTSIDE, WIDTH_ONLY,</code>
  * or <code>HEIGHT_ONLY</code>. For example, you could have a bar snap to the bottom of the screen and 
  * stretch horizontally to fill the width of the stage. Or add a background image that proportionally scales 
- * to fill the entire stage.<br /><br />
+ * to fill the entire stage.</p>
  *	
- * There are a few things that make LiquidStage particularly useful:
+ * <p>There are a few things that make LiquidStage particularly useful:</p>
  *	<ul>
  *		<li> Your DisplayObjects do not need to be at the root level - LiquidStage will compensate for nesting even if the DisplayObject's
  *		  anscestors are offset and/or scaled. </li>
@@ -48,7 +48,7 @@ package com.greensock.layout {
  *	</ul> 
  *	
  *	
- * @example Example AS3 code:<listing version="3.0">
+ * <listing version="3.0">
 import com.greensock.layout.~~;
 
 //create a LiquidStage instance for the current stage which was built at an original size of 550x400
@@ -75,7 +75,7 @@ function onLiquidStageUpdate(event:Event):void {
 
 </listing>
  *		
- * <b>NOTES / LIMITATIONS:</b>
+ * <p><strong>NOTES / LIMITATIONS:</strong></p>
  * <ul>
  *		<li> You need to set up your objects on the stage initially with the desired relative distance between
  * 			them and their PinPoint; LiquidStage doesn't reposition them initially. For example, if you want
@@ -90,13 +90,13 @@ function onLiquidStageUpdate(event:Event):void {
  * 			<a href="http://www.greensock.com/club/">http://www.greensock.com/club/</a> to sign up or get more details.</li>
  * </ul>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the license that came with your Club GreenSock membership and is <b>ONLY</b> to be used by corporate or "Shockingly Green" Club GreenSock members. To learn more about Club GreenSock, visit <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a>.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
 	public class LiquidStage extends EventDispatcher {
 		/** @private **/
-		public static const VERSION:Number = 2.13;
+		public static const VERSION:Number = 2.14;
 		/** Refers to the first LiquidStage instance created (or you can set it to any other instance) - it serves as an easy way to reference a LiquidStage through a static variable. **/
 		public static var defaultStage:LiquidStage;
 		
@@ -166,8 +166,8 @@ function onLiquidStageUpdate(event:Event):void {
 		 */
 		public function LiquidStage(stage:Stage, baseWidth:uint, baseHeight:uint, minWidth:uint=0, minHeight:uint=0, maxWidth:uint=99999999, maxHeight:uint=99999999):void {
 			
-			if (TweenLite.version < 11.51) {
-				throw new Error("LiquidStage warning: please update your TweenLite class to at least version 11.51 at http://www.TweenLite.com.");
+			if (Number((TweenLite.version + ".0").split(".")[0]) < 12) {
+				throw new Error("LiquidStage warning: please update your TweenLite class to at least version 12 at http://www.greensock.com.");
 			} else if (stage == null) {
 				throw new Error("LiquidStage error: you must define a valid stage instance in the constructor. If the stage is null, please addEventListener(Event.ADDED_TO_STAGE) one of your DisplayObjects and wait to create the LiquidStage instance until AFTER the stage property is not null.");
 			}
@@ -258,15 +258,16 @@ function onLiquidStageUpdate(event:Event):void {
 		}
 		
 		/**
-		 * Retrieves the LiquidStage instance associated with a particular stage. For example:<br /><br /><code>
-		 * 
-		 * //create the LiquidStage instance<br />
-		 * var ls:LiquidStage = new LiquidStage(this.stage, 550, 400); <br /><br />
-		 * 
-		 * //then later, if you need to find the LiquidStage instance for this stage to attach() objects, you could do this:<br />
-		 * var ls:LiquidStage = LiquidStage.getByStage(this.stage);<br />
-		 * ls.attach(mc1, ls.TOP_RIGHT);<br />
-		 * ls.attach(mc2, ls.BOTTOM_CENTER);<br /></code>
+		 * Retrieves the LiquidStage instance associated with a particular stage. For example:
+		 * <listing version="3.0">
+//create the LiquidStage instance
+var ls:LiquidStage = new LiquidStage(this.stage, 550, 400);
+
+//then later, if you need to find the LiquidStage instance for this stage to attach() objects, you could do this:
+var ls:LiquidStage = LiquidStage.getByStage(this.stage);
+ls.attach(mc1, ls.TOP_RIGHT);
+ls.attach(mc2, ls.BOTTOM_CENTER);
+</listing>
 		 * 
 		 * @param stage The stage whose LiquidStage instance to return
 		 * @return LiquidStage instance associated with the stage
@@ -285,13 +286,13 @@ function onLiquidStageUpdate(event:Event):void {
 		 * PinPoint's position changes, its proportional movement will honor the DisplayObject's new position
 		 * instead of forcing it back to the same distance from the PinPoint. But again, you can set
 		 * the <code>strict</code> parameter to <code>true</code> if you want to force the object to always 
-		 * maintain a certain distance from the PinPoint<br /><br />
+		 * maintain a certain distance from the PinPoint
 		 * 
-		 * For example, if your object is 100 pixels away from the PinPoint and the PinPoint moves 15 pixels,
+		 * <p>For example, if your object is 100 pixels away from the PinPoint and the PinPoint moves 15 pixels,
 		 * the DisplayObject will move 15 pixels as well (or however many pixels it takes to maintain its relative
 		 * distance to the PinPoint which may be more or less than 15 pixels if it is nested inside a scaled parent).
 		 * Strict mode, however, will force the DisplayObject to maintain its exact distance away from the PinPoint
-		 * (no manual position changes will be honored when LiquidStage updates).
+		 * (no manual position changes will be honored when LiquidStage updates).</p>
 		 * 
 		 * @param target The DisplayObject to attach
 		 * @param pin The PinPoint to which the target should be attached (like <code>TOP_RIGHT</code> or <code>CENTER</code> or a custom PinPoint)
@@ -441,7 +442,7 @@ function onLiquidStageUpdate(event:Event):void {
 					}
 					
 					if (item.tween) {
-						if (item.tween.cachedTime < item.tween.cachedDuration && !item.tween.gc) {
+						if (item.tween._time < item.tween._duration && !item.tween._gc) {
 							if (item.strict) {
 								xDif = p.x - item.tween.vars.x;
 								yDif = p.y - item.tween.vars.y;

@@ -30,9 +30,9 @@ package com.greensock.text {
  * local x- or y-axis, which can be useful if, for example, you want to be able to scale the whole 
  * FlexSplitTextField from its center instead of its upper left corner. Use an onComplete in your
  * tween to call the FlexSplitTextField's <code>deactivate()</code> or <code>destroy()</code> 
- * method which will swap the original TextField back into place. <br /><br />
+ * method which will swap the original TextField back into place. 
  * 
- * @example Example AS3 code:<listing version="3.0">
+ * <listing version="3.0">
 import com.greensock.text.FlexSplitTextField;
 import com.greensock.TweenMax;
 import com.greensock.easing.Elastic;
@@ -43,7 +43,7 @@ import flash.geom.Point;
 var stf1:FlexSplitTextField = new FlexSplitTextField(myLabel);
 
 //tween each character down from 100 pixels above while fading in, and offset the start times by 0.05 seconds and then swap the original TextField back into place and destroy the split TextFields
-TweenMax.allFrom(stf1.textFields, 1, {y:"-100", autoAlpha:0, ease:Elastic.easeOut}, 0.05, stf1.destroy);
+TweenMax.staggerFrom(stf1.textFields, 1, {y:"-=100", autoAlpha:0, ease:Elastic.easeOut}, 0.05, stf1.destroy);
 
 //split myLabel2 by words
 var stf2:FlexSplitTextField = new FlexSplitTextField(myLabel2, FlexSplitTextField.TYPE_WORDS);
@@ -61,11 +61,11 @@ while (i--) {
 var stf3:FlexSplitTextField = new FlexSplitTextField(myText, FlexSplitTextField.TYPE_LINES);
 
 //slide each line in from the right, fading it in over 1 second and staggering the start times by 0.5 seconds.
-TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0}, 0.5, stf3.destroy);
+TweenMax.staggerFrom(stf3.textFields, 1, {x:"+=200", autoAlpha:0}, 0.5, stf3.destroy);
 
 </listing>
  * 
- * <b>NOTES / LIMITATIONS</b><br />
+ * <p><strong>NOTES / LIMITATIONS</strong></p>
  * <ul>
  * 		<li>Does not work perfectly with non-standard antialiasing (like "anti-alias for readability")</li>
  * 		<li>Does not work with htmlText</li>
@@ -79,13 +79,13 @@ TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0}, 0.5, stf3.destroy);
  * 			use the default width of 100 for the TextField initially until the component fully
  * 			renders which happens even after the creationComplete event! Therefore, if you try
  * 			to split apart the component's TextField too quickly, the result will look odd (100 pixels wide).</li>
- * </ul><br />
+ * </ul>
  * 
- * FlexSplitTextField is a <a href="http://blog.greensock.com/club/">Club GreenSock</a> membership benefit. 
+ * <p>FlexSplitTextField is a <a href="http://blog.greensock.com/club/">Club GreenSock</a> membership benefit. 
  * You must have a valid membership to use this class without violating the terms of use. Visit 
- * <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a> to sign up or get more details. <br /><br />
+ * <a href="http://blog.greensock.com/club/">http://blog.greensock.com/club/</a> to sign up or get more details. </p>
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	
@@ -117,7 +117,7 @@ TweenMax.allFrom(stf3.textFields, 1, {x:"200", autoAlpha:0}, 0.5, stf3.destroy);
 		public var textFields:Array;
 		
 		/**
-		 * Constructor.
+		 * Constructor
 		 * 
 		 * @param source The source UIComponent whose child TextField should be split apart. Remember, its TextField will be replaced in the display list with the FlexSplitTextField (which is essentially a UIComponent containing the various resulting TextFields).
 		 * @param splitType Determines the way in which the TextField is split apart - either by characters, words, or lines. Use the <code>TYPE_CHARACTERS, TYPE_WORDS,</code> and <code>TYPE_LINES</code> constants.

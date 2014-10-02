@@ -1,6 +1,6 @@
 /**
- * VERSION: 1.922
- * DATE: 2012-09-06
+ * VERSION: 1.938
+ * DATE: 2013-07-16
  * AS3
  * UPDATES AND DOCS AT: http://www.greensock.com/loadermax/
  **/
@@ -187,7 +187,7 @@ function errorHandler(event:LoaderEvent):void {
 }
  </listing>
  * 
- * <p><strong>Copyright 2010-2012, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @see com.greensock.loading.data.VideoLoaderVars
  * 
@@ -412,7 +412,7 @@ function errorHandler(event:LoaderEvent):void {
 			
 			_ns = (this.vars.netStream is NetStream) ? this.vars.netStream : new NetStream(_nc);
 			_ns.checkPolicyFile = Boolean(this.vars.checkPolicyFile == true);
-			_ns.client = {onMetaData:_metaDataHandler, onCuePoint:_cuePointHandler};
+			_ns.client = {onMetaData:_metaDataHandler};
 			
 			_ns.addEventListener(NetStatusEvent.NET_STATUS, _statusHandler, false, 0, true);
 			_ns.addEventListener("ioError", _failHandler, false, 0, true);
@@ -703,6 +703,28 @@ function cuePointHandler(event:LoaderEvent):void {
 			this.videoPaused = false;
 		}
 		
+		/**
+		 * Sets or gets the current repeat count (how many times the video has repeated, as determined
+		 * by the <code>"repeat"</code> special property that was passed into the constructor). If you pass 
+		 * a value to the function, it acts as a setter, and if you omit the parameter, it acts as a getter
+		 * and returns the current value. For example, if the video was set to repeat 5 times and it is currently
+		 * in the middle of its 3rd time playing, <code>repeatCount()</code> will return 2 because it has already 
+		 * finished playing twice completely. 
+		 * 
+		 * @param value the value that should be assigned to the current repeat count (or if you omit this parameter, the current repeat count will be returned)
+		 * @return If the <code>value</code> parameter is omitted, it will return the current repeat count (how many times it has completely played and looped back to the beginning). If the function is used as a setter, the VideoLoader instance itself is returned in order to make chaining easier. 
+		 */
+		public function repeatCount(value:int=0):* {
+			if (!arguments.length) {
+				return _repeatCount;
+			}
+			if (value < int(this.vars.repeat)) {
+				_videoComplete = false;
+			}
+			_repeatCount = value;
+			return this;
+		}
+		
 		/** 
 		 * Attempts to jump to a certain time in the video. If the video hasn't downloaded enough to get to
 		 * the new time or if there is no keyframe at that time value, it will get as close as possible.
@@ -840,6 +862,15 @@ function cuePointHandler(event:LoaderEvent):void {
 			if (this.metaData == null || this.metaData.cuePoints == null) { //sometimes videos will trigger the onMetaData multiple times (especially F4V files) and occassionally the last call doesn't contain cue point data!
 				this.metaData = info;
 			}
+			//due to buggy behavior in Flash's NetStream that sometimes causes cue point events to be triggered multiple times and/or at the wrong time, we convert embedded cue points into ActionScript cue points so that we can make everything consistent. 
+			if (this.metaData.cuePoints) {
+				var a:Array = this.metaData.cuePoints,
+					i:int = a.length;
+				while (--i > -1) {
+					this.removeASCuePoint(a[i].name); //in case it was already added. There's buggy behavior in Flash's NetStream that causes it to sometimes receive its metaData twice!
+					this.addASCuePoint(a[i].time, a[i].name);
+				}
+			}
 			_duration = info.duration;
 			if ("width" in info) {
 				_video.width = Number(info.width); 
@@ -854,13 +885,6 @@ function cuePointHandler(event:LoaderEvent):void {
 				(_sprite as Object).rawContent = _video; //on rare occasions, _metaDataHandler() is called twice by the NeStream (particularly for F4V files) and the 2nd call contains more data than the first, so just in case the width/height changed, we set the rawContent of the ContentDisplay to make sure things render according to the correct size.
 			}
 			dispatchEvent(new LoaderEvent(LoaderEvent.INIT, this, "", info));
-		}
-		
-		/** @private **/
-		protected function _cuePointHandler(info:Object):void {
-			if (!_videoPaused) { //in case there's a cue point very early on and autoPlay was set to false - remember, to work around bugs in NetStream, we cannot pause() it until we receive metaData and the first frame renders.
-				dispatchEvent(new LoaderEvent(VIDEO_CUE_POINT, this, "", info));
-			}
 		}
 		
 		/** @private **/
@@ -1216,6 +1240,14 @@ function cuePointHandler(event:LoaderEvent):void {
 		public function set volume(value:Number):void {
 			_sound.volume = _volume = value;
 			_ns.soundTransform = _sound;
+		}
+		
+		/** The soundTransform of the NetStream associated with the VideoLoader (this gets refreshed when the VideoLoader is unloaded or reloaded). **/
+		public function get soundTransform():SoundTransform {
+			return _sound;
+		}
+		public function set soundTransform(value:SoundTransform):void {
+			_ns.soundTransform = _sound = value;
 		}
 		
 		/** The time (in seconds) at which the virtual playhead is positioned on the video. For example, if the virtual playhead is currently at the 3-second position (3 seconds from the beginning), this value would be 3. **/

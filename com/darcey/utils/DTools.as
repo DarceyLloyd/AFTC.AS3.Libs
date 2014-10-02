@@ -46,6 +46,14 @@ package com.darcey.utils
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function setSize(arg:*,w:Number,h:Number):void
+		{
+			arg.width = w;
+			arg.height = h;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -531,10 +539,15 @@ package com.darcey.utils
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public static function centerDisplayObject(element:DisplayObject,containerWidth:Number,containerHeight:Number):void
+		public static function centerDisplayObject(element:DisplayObject,containerWidth:Number,containerHeight:Number,centerAligned:Boolean=false):void
 		{
-			element.x = ((containerWidth/2) - (element.width/2));
-			element.y = ((containerHeight/2) - (element.height/2));
+			if (!centerAligned){
+				element.x = ((containerWidth/2) - (element.width/2));
+				element.y = ((containerHeight/2) - (element.height/2));
+			} else {
+				element.x = ((containerWidth) - (element.width/2));
+				element.y = ((containerHeight) - (element.height/2));
+			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		

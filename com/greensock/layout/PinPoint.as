@@ -16,9 +16,9 @@ package com.greensock.layout {
 /**
  * PinPoint works with LiquidStage to create reference points on the stage and/or inside 
  * DisplayObjects so that the movement of these PinPoints trickles down and affects
- * the position of attached DisplayObjects. See LiquidStage documentation for more information. <br /><br />
+ * the position of attached DisplayObjects. See LiquidStage documentation for more information. 
  * 
- * <b>Copyright 2011, GreenSock. All rights reserved.</b> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for corporate Club GreenSock members, the software agreement that was issued with the corporate membership.
+ * <p><strong>Copyright 2010-2014, GreenSock. All rights reserved.</strong> This work is subject to the terms in <a href="http://www.greensock.com/terms_of_use.html">http://www.greensock.com/terms_of_use.html</a> or for <a href="http://www.greensock.com/club/">Club GreenSock</a> members, the software agreement that was issued with the membership.</p>
  * 
  * @author Jack Doyle, jack@greensock.com
  */	 
@@ -60,13 +60,13 @@ package com.greensock.layout {
 		 * PinPoint's position changes, its proportional movement will honor the DisplayObject's new position
 		 * instead of forcing it back to the same distance from the PinPoint. But again, you can set
 		 * the <code>strict</code> parameter to <code>true</code> if you want to force the object to always 
-		 * maintain a certain distance from the PinPoint<br /><br />
+		 * maintain a certain distance from the PinPoint
 		 * 
-		 * For example, if your object is 100 pixels away from the PinPoint and the PinPoint moves 15 pixels,
+		 * <p>For example, if your object is 100 pixels away from the PinPoint and the PinPoint moves 15 pixels,
 		 * the DisplayObject will move 15 pixels as well (or however many pixels it takes to maintain its relative
 		 * distance to the PinPoint which may be more or less than 15 pixels if it is nested inside a scaled parent).
 		 * Strict mode, however, will force the DisplayObject to maintain its exact distance away from the PinPoint
-		 * (no manual position changes will be honored when LiquidStage updates).
+		 * (no manual position changes will be honored when LiquidStage updates).</p>
 		 * 
 		 * @param target The DisplayObject to attach
 		 * @param strict In strict mode, the target will be forced to remain <b>EXACTLY</b> the same distance from the pin as it was when it was attached. If strict is false, LiquidStage will honor any manual changes you make to the target's position, making it more flexible. Note that LiquidStage only performs updates to the target's position when the stage resizes and/or when <code>update()</code> is called.
@@ -91,9 +91,9 @@ package com.greensock.layout {
 		/**
 		 * Determines a PinPoint's coordinates according to any DisplayObject's coordinate space. 
 		 * For example, to figure out where the CENTER PinPoint is inside the "myImage" DisplayObject,
-		 * you'd do:<br /><br /><code>
+		 * you'd do:<p><code>
 		 * 
-		 * var point:Point = myPinPoint.toLocal(myImage);</code>
+		 * var point:Point = myPinPoint.toLocal(myImage);</code></p>
 		 * 
 		 * @param target DisplayObject whose coordinate space the PinPoint's position should be translated into.
 		 * @return Point translated into the target's coordinate space.
