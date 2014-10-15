@@ -31,6 +31,7 @@ package com.darcey.debug
 		private var txt:TextField;
 		private var leftCtrlDown:Boolean = false;
 		private var shiftDown:Boolean = false;
+		private var fontSize:Number = 11;
 		// ---------------------------------------------------------------------------------------------------------------------------
 		
 		
@@ -150,7 +151,7 @@ package com.darcey.debug
 			
 			// Debug text box
 			tf2 = new TextFormat();
-			tf2.size = 11;
+			tf2.size = fontSize;
 			tf2.color = 0xFFFFFF;
 			
 			txtArea = new TextField();
@@ -316,7 +317,12 @@ package com.darcey.debug
 		// ----------------------------------------------------------------------------------------------------
 		
 		
-		
+		public function setFontSize(n:Number=11):void {
+			fontSize = n;
+			tf2.size = fontSize;
+			txtArea.defaultTextFormat = tf2;
+			txtArea.setTextFormat(tf2);
+		}
 		
 		
 		

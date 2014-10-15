@@ -50,18 +50,18 @@ package com.darcey.debug
 		
 		public var caller:Object;
 		public var p1:*;
-		public var p2:*;
+		//public var p2:*;
 		public var value:String;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public function VTrace(caller:Object,p1:String,p2:String="",refreshRate:Number = 500)
+		public function VTrace(caller:Object,p1:String,refreshRate:Number = 500)
 		{
 			this.caller = caller;
 			this.p1 = p1;
-			this.p2 = p2;
+			//this.p2 = p2;
 			this.refreshRate = refreshRate;
 			
 			this.addEventListener(Event.ADDED_TO_STAGE,init);
@@ -82,7 +82,7 @@ package com.darcey.debug
 				return;
 			}
 			
-			if (value == undefined){
+			if (value == ""){
 				trace("VTrace(): WARNING value = undefined");
 				return;
 			}
@@ -119,6 +119,12 @@ package com.darcey.debug
 				
 				case "object":
 					type="object";
+					if (typeof(caller[p1])=="number"){
+						value = caller[p1].toFixed(2);
+					} else {
+						value = caller[p1];
+					}
+					/*
 					try {
 						if (typeof(caller[p1][p2])=="number")
 						{
@@ -129,10 +135,17 @@ package com.darcey.debug
 					} catch (e:Error) {
 						value = "NA";
 					}
+					*/
 					break;
 				
 				case "object Dictionary":
 					type="dictionary";
+					if (typeof(caller[p1])=="number"){
+						value = caller[p1].toFixed(2);
+					} else {
+						value = caller[p1];
+					}
+					/*
 					try {
 						if (typeof(caller[p1][p2])=="number")
 						{
@@ -143,6 +156,7 @@ package com.darcey.debug
 					} catch (e:Error) {
 						value = "NA";
 					}
+					*/
 					break;
 			}
 			
@@ -199,11 +213,14 @@ package com.darcey.debug
 			
 			//trace("### p1 = " + p1 + " ### p2 = "+ p2);
 			
+			/*
 			if (p1 != "" && p2 != ""){
 				txtTitle.text = caller + "." + p1 + "." + p2 + " = ";
 			} else if (p1 != "" && p2 == ""){
 				txtTitle.text = caller + "." + p1 + " = ";
 			}
+			*/
+			txtTitle.text = caller + "." + p1 + " = ";
 			txtTitle.setTextFormat(tfTitle);
 			
 			
@@ -328,7 +345,7 @@ package com.darcey.debug
 			dragBox = null;
 			caller = null;
 			p1 = null;
-			p2 = null;
+			//p2 = null;
 			txtTitle = null;
 			tfTitle = null;
 			txtValue = null;

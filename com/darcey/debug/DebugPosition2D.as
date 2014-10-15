@@ -166,7 +166,7 @@ package com.darcey.debug
 				
 					//trace("Rotation                " + "   =   " + "CTRL + Arrow keys Left & Right (+/- 1)");
 					if (!shiftKeyPressed && ctrlKeyPressed && !altKeyPressed){
-						target.rotation -= 0.1;
+						target.rotation -= 2;
 						keyCodeRecognised = true;
 					}
 					break;
@@ -191,7 +191,7 @@ package com.darcey.debug
 				
 					//trace("Rotation                " + "   =   " + "CTRL + Arrow keys Left & Right (+/- 1)");
 					if (!shiftKeyPressed && ctrlKeyPressed && !altKeyPressed){
-						target.rotation += 0.1;
+						target.rotation += 2;
 						keyCodeRecognised = true;
 					}
 					break;

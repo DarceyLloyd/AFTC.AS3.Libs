@@ -44,7 +44,9 @@ package com.darcey.utils
 		{
 			displayObject.scaleX = displayObject.scaleY = scale;
 		}
+		public static function scale(displayObject:DisplayObject,scale:Number=1.5):void{setScale(displayObject,scale);}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function setSize(arg:*,w:Number,h:Number):void

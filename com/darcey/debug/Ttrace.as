@@ -516,10 +516,29 @@ package com.darcey.debug
 		// ----------------------------------------------------------------------------------------
 		
 		
+		// ----------------------------------------------------------------------------------------
+		public function clear():void
+		{
+			if (debugbox)
+			{
+				debugbox.clear();
+			}
+		}
 		
+		
+		public function setDebugBoxFontSize(n:Number):void
+		{
+			if (debugbox){
+				debugbox.setFontSize(n);
+			}
+		}
+		
+		
+		// ----------------------------------------------------------------------------------------
 		public function get debugbox():DebugBox {
 			return TtraceVO.debugBox;	
 		}
+		// ----------------------------------------------------------------------------------------
 		
 	}
 }
