@@ -10,6 +10,7 @@ package com.darcey.utils
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
+	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
@@ -28,6 +29,14 @@ package com.darcey.utils
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public class DTools
 	{
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function arrayRemoveLastIndex(arr:Array):void
+		{
+			arr.splice(arr.length-1);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function randomNumber(min:Number, max:Number):Number
@@ -183,7 +192,8 @@ package com.darcey.utils
 		
 		
 		
-		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Removes all childen in 
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function removeAllChildrenIn(target:*):void
 		{
@@ -197,6 +207,31 @@ package com.darcey.utils
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// Showall children in 
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function showAllChildrenIn(target:*,setAlpha:Boolean = false):void
+		{
+			try { 
+				while(target.numChildren) 
+				{ 
+					if (setAlpha){
+						target.getChildAt(1).alpha = 1;
+					}
+					target.getChildAt(1).visible = true;
+				} 
+			} catch (e:Error) {
+				trace("#### DTOOLS: ERROR: hideAllChildrenIn(): Unable to remove children from " + target);
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		
 		
 		
 		
@@ -398,6 +433,10 @@ package com.darcey.utils
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
+		
+		
+		
+
 		
 		
 		

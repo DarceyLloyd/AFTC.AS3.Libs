@@ -77,6 +77,14 @@ package com.darcey.io
 			
 			this.deviceIndex = deviceIndex;
 			mic = flash.media.Microphone.getMicrophone(deviceIndex);
+			if (!mic){
+				t.wdiv()
+				t.wdiv()
+				t.warn("ERROR: UNABLE TO GET ACCESS TO MICROPHONE");
+				t.wdiv()
+				t.wdiv()
+				return;
+			}
 			mic.setLoopBack(loopBack);
 			mic.setSilenceLevel(silenceLevel,silenceTimeout);
 			mic.gain = gain;
