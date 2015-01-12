@@ -3,9 +3,9 @@ package com.darcey.io
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	import com.darcey.debug.Ttrace;
 	
-	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
@@ -21,19 +21,22 @@ package com.darcey.io
 		private var t:Ttrace;
 		
 		private var stage:Stage;
-		private var target:*;
+		private var target:MovieClip;
 		private var lockCenter:Boolean = false;
 		private var rect:Rectangle;
 		private var useStageEvents:Boolean = false;
+		private var targetArea:Rectangle;
+		
+		private var debug:Boolean = false;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public function DragHandler(stage:Stage,target:*,lockCenter:Boolean=false,rect:Rectangle=null,useStageEvents:Boolean=true)
+		public function DragHandler(stage:Stage,target:MovieClip,lockCenter:Boolean=false,rect:Rectangle=null,useStageEvents:Boolean=true,targetArea:Rectangle=null,debug:Boolean=false)
 		{
 			// Setup class specific tracer
-			t = new Ttrace(true);
+			t = new Ttrace(debug);
 			t.ttrace("DragHandler()");
 			
 			
@@ -52,6 +55,10 @@ package com.darcey.io
 			
 			this.useStageEvents = useStageEvents;
 			
+			this.targetArea = targetArea;
+			
+			this.debug = debug;
+			
 			attachListeners();
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -62,6 +69,9 @@ package com.darcey.io
 		{
 			t.ttrace("DragHandler.attachListeners()");
 			
+			target.buttonMode = true;
+			target.useHandCursor = true;
+			
 			target.addEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
 			target.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 			target.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler);
@@ -70,8 +80,69 @@ package com.darcey.io
 				stage.addEventListener(MouseEvent.MOUSE_UP,mouseUpHandler);
 				stage.addEventListener(MouseEvent.MOUSE_OUT,mouseUpHandler);
 			}
+			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		private function mouseDownHandler(e:MouseEvent):void
+		{
+			t.ttrace("DragHandler.mouseDownHandler(e)");
+			
+			target.startDrag(lockCenter,rect);
+			target.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		private function mouseUpHandler(e:MouseEvent):void
+		{
+			t.ttrace("DragHandler.mouseUpHandler(e)");
+			
+			target.stopDrag();
+			try {
+				target.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
+			} catch (e:Error) {}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		private function mouseMoveHandler(e:MouseEvent=null):void
+		{
+			if (debug){
+				t.ttrace("x:" + target.x + " y:" + target.y);
+			}
+			
+			if (targetArea){
+				if ((target.x >= targetArea.x) && (target.x <= targetArea.width))
+				{
+					if ((target.y >= targetArea.y) && (target.y <= targetArea.height))
+					{
+						dispatchEvent( new Event(Event.COMPLETE) );
+					}
+				}
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function stopDrag():void
+		{
+			target.stopDrag();
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -109,50 +180,6 @@ package com.darcey.io
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
-		
-		
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		private function mouseDownHandler(e:MouseEvent):void
-		{
-			t.ttrace("DragHandler.mouseDownHandler(e)");
-			
-			
-			//mcMagnifyingGlass.startDrag(false,new Rectangle(-1100,-600,1800,1400));
-			target.startDrag(lockCenter,rect);
-			target.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-		}
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		private function mouseUpHandler(e:MouseEvent):void
-		{
-			t.ttrace("DragHandler.mouseUpHandler(e)");
-			
-			target.stopDrag();
-			try {
-				target.removeEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
-			} catch (e:Error) {}
-		}
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		private function mouseMoveHandler(e:MouseEvent=null):void
-		{
-			
-		}
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		
-		
-		
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public function stopDrag():void
-		{
-			target.stopDrag();
-		}
-		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		

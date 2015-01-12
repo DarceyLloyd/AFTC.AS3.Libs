@@ -99,6 +99,22 @@ package com.darcey.io
 				acc.removeEventListener(AccelerometerEvent.UPDATE, updateHandler);
 			} catch (e:Error) {}
 			
+			try {
+				stage.removeChild(vt1);
+			} catch (e:Error) {}
+			
+			try {
+				stage.removeChild(vt2);
+			} catch (e:Error) {}
+			
+			try {
+				stage.removeChild(vt3);
+			} catch (e:Error) {}
+			
+			try {
+				stage.removeChild(vt4);
+			} catch (e:Error) {}
+			
 			acc = null;
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

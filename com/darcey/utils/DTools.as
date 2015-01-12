@@ -295,7 +295,7 @@ package com.darcey.utils
 		{
 			trace("#### DTools.waitAndCallBack(delayInSeconds:"+delayInSeconds+", functionToCallBack)");
 			
-			callBackTime = delayInSeconds * 800;
+			callBackTime = delayInSeconds * 1000;
 			callBackFunction = functionToCallBack;
 			callBackTimer = new Timer(delayInSeconds*callBackTime);
 			callBackTimer.addEventListener(TimerEvent.TIMER,waitAndCallBackTimerComplete);
@@ -305,11 +305,13 @@ package com.darcey.utils
 		public static function waitAndCallBackTimerComplete(e:TimerEvent):void
 		{
 			trace("#### DTools.waitAndCallBack(callBackFunction:"+callBackFunction+"): COMPLETE");
-			callBackTimer.stop();
 			
 			try {
 				callBackTimer.removeEventListener(TimerEvent.TIMER,waitAndCallBackTimerComplete);
 			} catch (e:Error) {}
+			
+			callBackTimer.stop();
+			callBackTimer = null;
 			
 			callBackFunction.call();
 		}

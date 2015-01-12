@@ -9,9 +9,13 @@ package com.darcey.debug
 	import com.darcey.utils.JavaScriptNotification;
 	
 	import flash.display.Sprite;
+	import flash.net.URLLoader;
+	import flash.net.URLLoaderDataFormat;
+	import flash.net.URLRequest;
+	import flash.net.URLRequestMethod;
+	import flash.net.URLVariables;
 	import flash.text.Font;
 	import flash.utils.describeType;
-	import flash.xml.*;
 
 	// ----------------------------------------------------------------------------------------
 	
@@ -233,13 +237,16 @@ package com.darcey.debug
 		
 		
 		// ----------------------------------------------------------------------------------------
-		public function div():void
+		public function div():String
 		{
 			if (enabled)
 			{
 				var msg:String = "#################################################################################";
 				addToDebugBox(msg);
 				trace(msg);
+				return msg;
+			} else {
+				return "";
 			}
 		}
 		// ----------------------------------------------------------------------------------------
@@ -254,8 +261,47 @@ package com.darcey.debug
 		}
 		// ----------------------------------------------------------------------------------------
 		
+		
+		
 		// ----------------------------------------------------------------------------------------
-		public function ttrace(param:Object=null):void
+		// FOR LOGGING DEBUG INFO VIA THE WEB WHEN OUTPUT IS NOT POSSIBLE ON DEVICE
+		// ----------------------------------------------------------------------------------------
+		private var url:String = "http://www.aftc.co.uk/log/log.php";
+		private var onlineLoggingEnabled:Boolean = false;
+		public function enableOnlineLogging():void {
+			onlineLoggingEnabled = true;
+		}
+		public function clearLog():void {
+			var variables:URLVariables = new URLVariables();
+			variables.msg = "DELETE";
+			
+			var request:URLRequest = new URLRequest(url);
+			request.method = URLRequestMethod.GET;
+			request.data = variables;
+			
+			var loader:URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
+			loader.load(request);
+		}
+		public function log(msg:String):void {			
+			var variables:URLVariables = new URLVariables();
+			variables.msg = msg;
+			
+			var request:URLRequest = new URLRequest(url);
+			request.method = URLRequestMethod.GET;
+			request.data = variables;
+			
+			var loader:URLLoader = new URLLoader();
+			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
+			loader.load(request);
+			
+		}
+		// ----------------------------------------------------------------------------------------
+		
+		
+		
+		// ----------------------------------------------------------------------------------------
+		public function ttrace(param:Object=null):String
 		{			
 			// Check if class specific tracing has been enabled (keeps things clean)
 			if (enabled)
@@ -332,7 +378,7 @@ package com.darcey.debug
 							
 							addToDebugBox(msg);
 							trace(msg);
-							return;
+							return msg;
 						}
 						
 						if (param.length)
@@ -372,6 +418,7 @@ package com.darcey.debug
 				} // End switch
 			} // End if
 			
+			return msg;
 			msg = "";
 		}
 		// ----------------------------------------------------------------------------------------
