@@ -16,6 +16,7 @@ package com.darcey.utils
 	import flash.display.StageDisplayState;
 	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
+	import flash.filesystem.File;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -35,6 +36,19 @@ package com.darcey.utils
 			arr.splice(arr.length-1);
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function traceArray(arr:Array):void
+		{
+			trace("traceArray: - - - - - - - - - - - - - - - - - - - - - - - - -");
+			for (var index:String in arr){
+				trace(index + " = " + arr[index]);
+			}
+			trace("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
 		
 		
 		

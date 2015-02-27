@@ -51,7 +51,7 @@ package com.bit101.components
 		
 		// Flex 4.x sdk:
 		// NOTE: Mobile dev may require full path to font
-		[Embed(source="G:/Software/Code/AS3/libs_svn/com/bit101/pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
+		//[Embed(source="./pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
 		//[Embed(source="com/bit101/pf_ronda_seven.ttf", embedAsCFF="false", fontName="PF Ronda Seven", mimeType="application/x-font")]
 		// Flex 3.x sdk:
 		// [Embed(source="/assets/pf_ronda_seven.ttf", fontName="PF Ronda Seven", mimeType="application/x-font")]

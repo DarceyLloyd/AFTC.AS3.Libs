@@ -8,6 +8,7 @@ package com.darcey.io
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.EventDispatcher;
 	import flash.events.IOErrorEvent;
 	import flash.net.URLRequest;
 
@@ -16,7 +17,7 @@ package com.darcey.io
 	
 	
 	// -------------------------------------------------------------------------------------------------------------------------------
-	public class LoadImage
+	public class LoadImage extends EventDispatcher
 	{
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private var t:Ttrace;
@@ -85,6 +86,8 @@ package com.darcey.io
 				sprite.width = spriteW;
 				sprite.height = spriteH;
 			}
+			
+			dispatchEvent( new Event(Event.COMPLETE) );
 		}
 		// ---------------------------------------------------------------------------------------------------------------------------
 		

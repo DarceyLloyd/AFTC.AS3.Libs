@@ -23,7 +23,7 @@ package com.darcey.video
 	public class CustomVideoPlayer extends Sprite
 	{
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		private var t:Ttrace;
+		public var t:Ttrace;
 		
 		private var stageRef:Stage;
 		public var customClient:CustomVideoPlayerClient;
@@ -110,6 +110,7 @@ package com.darcey.video
 					break;
 				default:
 					t.ttrace("CustomVideoPlayer.netStatusHandler(event): code = " + event.info.code);
+					dispatchEvent( new CustomEvent(event.info.code) );
 					break;
 			}
 		}
