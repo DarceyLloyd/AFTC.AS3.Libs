@@ -212,7 +212,7 @@ package com.darcey.debug
 				msg += "[ width:" + target.width.toFixed(1) + "   height:" + target.height.toFixed(1) + " ]   ";
 				msg += "[ scaleX:" + target.scaleX.toFixed(2) + "   scaleY:" + target.scaleY.toFixed(2) + " ]   ";
 				msg += "[ rotation:" + target.rotation.toFixed(2) + "]   ";
-				msg += "[ alpha:" + target.alpha.toFixed(2) + "]";
+				//msg += "[ alpha:" + target.alpha.toFixed(2) + "]";
 				trace(msg);
 				addToDebugBox(msg);
 				if (!target.visible)
@@ -243,7 +243,7 @@ package com.darcey.debug
 			trace("Width & Height          " + "   =   " + "Shift + Arrow keys (+/- Movement distance)");
 			trace("Scale                   " + "   =   " + "ALT + Arrow keys (+/- 0.01)");
 			trace("Rotation                " + "   =   " + "CTRL + Arrow keys Left & Right (+/- 1)");
-			trace("Alpha                   " + "   =   " + "CTRL + Arrow keys Up & Down (+/- 0.01)");
+			//trace("Alpha                   " + "   =   " + "CTRL + Arrow keys Up & Down (+/- 0.01)");
 			trace("##########################################################################################");
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

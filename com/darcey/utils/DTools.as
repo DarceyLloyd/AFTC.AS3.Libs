@@ -10,13 +10,11 @@ package com.darcey.utils
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
-	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
 	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
-	import flash.filesystem.File;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
@@ -49,6 +47,51 @@ package com.darcey.utils
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function degToRad(deg:Number):Number
+		{
+			var rad:Number = deg * (Math.PI / 180);
+			return rad;
+		}
+		public static function radToDeg(rad:Number):Number
+		{
+			var deg:Number = rad * (180 / Math.PI);
+			return deg;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function rgbGetRFromHex(c:uint):uint {
+			return (( c >> 16 ) & 0xFF);
+		}
+		public static function rgbGetGFromHex(c:uint):uint {
+			return ( (c >> 8) & 0xFF );
+		}
+		public static function rgbGetBFromHex(c:uint):uint {
+			return ( c & 0xFF );
+		}
+		public static function rgbToHex(r:uint,g:uint,b:uint):uint
+		{
+			var n:uint = r << 16 | g << 8 | b;
+			return n;
+		}
+		public static function getHexFromRGB(r:uint,g:uint,b:uint):uint
+		{
+			return rgbToHex(r,g,b);
+		}
+		public static function getHexStringFromRGB(r:uint,g:uint,b:uint):String
+		{
+			var intVal:int = r << 16 | g << 8 | b;
+			var hexVal:String = intVal.toString(16);
+			var hexValString:String = "#" + (hexVal.length < 6 ? "0" + hexVal : hexVal);
+			return hexValString;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
@@ -596,6 +639,8 @@ package com.darcey.utils
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		// NOTE: Sometimes the display object just wont center no matter what (use get center X and get Center Y if and set manually if it does
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function centerDisplayObject(element:DisplayObject,containerWidth:Number,containerHeight:Number,centerAligned:Boolean=false):void
 		{
 			if (!centerAligned){
@@ -607,6 +652,24 @@ package com.darcey.utils
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		public static function getDisplayObjectCenter(element:DisplayObject,containerWidth:Number,containerHeight:Number,centerAligned:Boolean=false):Array
+			{
+				var x:Number = -1;
+				var y:Number = -1;
+			
+				if (!centerAligned){
+					x = ((containerWidth/2) - (element.width/2));
+					y = ((containerHeight/2) - (element.height/2));
+				} else {
+					x = ((containerWidth) - (element.width/2));
+					y = ((containerHeight) - (element.height/2));
+				}
+				
+				return [x,y];
+			}
+			// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		

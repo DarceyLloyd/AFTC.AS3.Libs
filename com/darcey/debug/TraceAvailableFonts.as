@@ -10,7 +10,7 @@ package com.darcey.debug
 		private var msg:String = "";
 		
 		// ---------------------------------------------------------------------------------------------------------------------
-		public function TraceAvailableFonts(appName:String)
+		public function TraceAvailableFonts(appName:String="")
 		{
 			msg += "---------------------------------------------------------------------------\n";
 			msg += "AVAILABLE FONTS to [" + appName + "]:\n";

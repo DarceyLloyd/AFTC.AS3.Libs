@@ -30,7 +30,7 @@ package com.darcey.parsers
 			} else {
 				msg = "";
 				msg += "#### ERROR > XMLParser";
-				msg += "#### XMLParser > parent: XML Tag doesn't exist [xml." + node + "]";
+				msg += "#### XMLParser > parent: XML Tag doesn't exist [xmltrue." + node + "]";
 				new Error(msg);
 				return null;
 			}
@@ -224,7 +224,8 @@ package com.darcey.parsers
 					break;
 				
 				case "string":
-					return String(xmlValue);
+					//split("\r").join(""); // Keeps \n but removes \r
+					return String(xmlValue).split("\r").join("");
 					break;
 				
 				case "xml":
