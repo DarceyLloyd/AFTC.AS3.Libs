@@ -13,11 +13,13 @@ package com.darcey.utils
 	import flash.display.Sprite;
 	import flash.display.Stage;
 	import flash.display.StageDisplayState;
+	import flash.events.Event;
 	import flash.events.ProgressEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
+	import flash.media.Sound;
 	import flash.net.URLRequest;
 	import flash.net.navigateToURL;
 	import flash.text.TextField;
@@ -341,6 +343,28 @@ package com.darcey.utils
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function playExternalSound(url:String):void
+		{
+			var s:Sound = new Sound();
+			s.addEventListener(Event.COMPLETE, playExternalSoundLoadedHandler,false,0,true); 
+			var req:URLRequest = new URLRequest(url); 
+			s.load(req); 
+		}
+		private static function playExternalSoundLoadedHandler(e:Event):void 
+		{ 
+			var localSound:Sound = e.target as Sound; 
+			localSound.play(); 
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		
 		
 		
