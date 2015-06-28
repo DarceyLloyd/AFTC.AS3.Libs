@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="new_actionscript_file" deleted="false" description="Newly created ActionScript file" enabled="true" id="com.adobe.flexide.as.core.filetemplates.new_actionscript_file" name="ActionScript File">// ActionScript file</template><template autoinsert="true" context="new_actionscript_class" deleted="false" description="Newly created ActionScript Class file" enabled="true" id="com.adobe.flexide.as.core.filetemplates.new_actionscript_class" name="ActionScript Class">${package_declaration}&#13;
+{&#13;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+	${import_declaration}&#13;
+	import com.darcey.debug.Ttrace;&#13;
+	&#13;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+	&#13;
+	&#13;
+	&#13;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+	${class_declaration}&#13;
+	{&#13;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+		private var t:Ttrace;&#13;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+		&#13;
+		&#13;
+		&#13;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+		${class_body}&#13;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+		&#13;
+		&#13;
+		&#13;
+	}&#13;
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+}</template><template autoinsert="true" context="new_actionscript_interface" deleted="false" description="Newly created ActionScript Interface file" enabled="true" id="com.adobe.flexide.as.core.filetemplates.new_actionscript_interface" name="ActionScript Interface">${package_declaration}
+{
+	${import_declaration}
+	${interface_declaration}
+	{
+		
+	}
+}</template><template autoinsert="true" context="new_as_skinnable_comp" deleted="false" description="Newly created ActionScript Skinnable Component" enabled="true" id="com.adobe.flexide.as.core.filetemplates.new_as_skinnable_comp" name="ActionScript Skinnable Component">${package_declaration}
+{
+    ${comment_guidance_as_skinnnable_component_reference}
+   
+	${import_declaration}
+	
+	${comment_guidance_skinstate_help}
+	
+	${class_declaration}
+	{
+		${comment_guidance_skinpart}
+		
+    	${class_body}
+    	
+    	${comment_guidance_getCurrentSkinState}
+    	override protected function getCurrentSkinState():String
+    	{
+    		return super.getCurrentSkinState();
+    	} 
+		
+		${comment_guidance_partAdded}	
+		override protected function partAdded(partName:String, instance:Object) : void
+    	{
+       		super.partAdded(partName, instance);
+		}
+		
+		${comment_guidance_partRemoved}
+		override protected function partRemoved(partName:String, instance:Object) : void
+    	{
+      		super.partRemoved(partName, instance);
+    	}
+			
+	}
+}</template><template autoinsert="true" context="mobile_itemrenderer" deleted="false" description="Creates optimized ActionScript subclass for LabelItemRenderer" enabled="true" id="com.adobe.flexide.as.core.filetemplates.mobile_itemrenderer" name="Custom ActionScript item renderer for mobile List">${package_declaration}
+{
+    ${import_declaration}
+	
+	/**
+	 * 
+	 * ASDoc comments for this item renderer class
+	 * 
+	 */
+	${class_declaration}
+	{
+		${class_body}
+    	
+    	${comment_guidance_setData}
+    	override public function set data(value:Object):void
+    	{
+    		super.data = value;
+    		// the data has changed.  push these changes down in to the 
+			// subcomponents here    		
+    	} 
+		
+		${comment_guidance_createChildren}	
+		override protected function createChildren():void
+    	{
+       		super.createChildren();
+       		// create any additional children for your item renderer here
+		}
+		
+		${comment_guidance_measure}
+		override protected function measure():void
+    	{
+      		super.measure();
+      		// measure all the subcomponents here and set measuredWidth, measuredHeight, 
+			// measuredMinWidth, and measuredMinHeight      		
+    	}
+    	
+    	${comment_guidance_drawBackground}
+		override protected function drawBackground(unscaledWidth:Number, 
+									          							unscaledHeight:Number):void
+    	{
+      		super.drawBackground(unscaledWidth, unscaledHeight);
+      		// do any drawing for the background of the item renderer here      		
+    	}
+    	
+    	${comment_guidance_layoutContents}
+		override protected function layoutContents(unscaledWidth:Number, 
+									          							unscaledHeight:Number):void
+    	{
+      		super.layoutContents(unscaledWidth, unscaledHeight);
+      		// layout all the subcomponents here      		
+    	}
+			
+	}
+}</template></templates>
