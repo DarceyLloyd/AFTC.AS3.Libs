@@ -131,7 +131,8 @@ private function xmlLoaded(e:Event):void {&#13;
 </template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script_statement" deleted="false" description="Creates a do-while loop" enabled="true" id="com.adobe.flexide.as.core.codetemplates.do" name="do">do &#13;
 {&#13;
 	${line_selection}${cursor}&#13;
-} while(${condition:local_var(Boolean)});</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Add generic event" enabled="true" name="eventAdd">${object}.addEventListener(${event_type}.${event_prop},${function_name};</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Mouse Event" enabled="true" name="EventAddMouse">${object}.addEventListener(MouseEvent.CLICK,${function_name};</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Creates the body for a custom event class" enabled="true" id="com.adobe.flexide.as.core.codetemplates.eventBody" name="event body">public static const ${type_const}:String = "${type_const_value}";
+} while(${condition:local_var(Boolean)});</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Add generic event" enabled="true" name="eventAdd">${display_object}.addEventListener(Event.ADDED_TO_STAGE,${function_name};&#13;
+${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Creates the body for a custom event class" enabled="true" id="com.adobe.flexide.as.core.codetemplates.eventBody" name="event body">public static const ${type_const}:String = "${type_const_value}";
 
 public function ${enclosing_type}(type:String, ${cursor}bubbles:Boolean = ${bubbles:values(false,true)}, cancelable:Boolean = ${cancel:values(false,true)})
 {
@@ -146,8 +147,9 @@ override public function toString():String
 	return formatToString("${enclosing_type}", "type", "bubbles", "cancelable",
 	"eventPhase");
 }</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="generic event removal" enabled="true" name="EventRemove">try {&#13;
-	${object}.removeEventListener(${event_type}.${event_prop},${function_name};&#13;
-} catch (e:Error) {}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Remove mouse event" enabled="true" name="EventRemoveMouse">try {&#13;
+	${display_object}.removeEventListener(Event.ADDED_TO_STAGE,${function_name};&#13;
+} catch (e:Error) {}&#13;
+${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Remove mouse event" enabled="true" name="EventRemoveMouse">try {&#13;
 	${object}.removeEventListener(MouseEvent.CLICK,${function_name};&#13;
 } catch (e:Error) {}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script_statement" deleted="false" description="Iterate over value of an array using enumeration" enabled="true" id="com.adobe.flexide.as.core.codetemplates.fore" name="fore">for each (var ${index}:int in ${array}) &#13;
 {&#13;
@@ -247,7 +249,7 @@ public function set ${name}(${value}:${Type}):void
 		return;
 	_${name} = value;
 }
-${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick public movieclip" enabled="true" name="publicMovieClip">public var mc:MovieClip;</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick public sprite" enabled="true" name="publicSprite">public var s:Sprite;</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick redirect code" enabled="true" name="redirect">var url:String = "http://www.AllForTheCode.co.uk";&#13;
+${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="public static var " enabled="true" name="ps">public static var ${cursor};</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick public movieclip" enabled="true" name="publicMovieClip">public var mc:MovieClip;</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick public sprite" enabled="true" name="publicSprite">public var s:Sprite;</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="private var " enabled="true" name="pv">private var ${var_name}:${data_type}${cursor};</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="quick redirect code" enabled="true" name="redirect">var url:String = "http://www.AllForTheCode.co.uk";&#13;
 &#13;
 // If you want to send data to the url&#13;
 var urlVariables:URLVariables = new URLVariables();&#13;
@@ -300,22 +302,32 @@ ${cursor}
 </template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script_type_members" deleted="false" description="Creates a setter function" enabled="true" id="com.adobe.flexide.as.core.codetemplates.setter" name="setter">${specifier:values(public, protected, private)} function set ${property}(${value}:${Type:values(String,Number,Boolean)}):void &#13;
 {&#13;
 	${cursor}&#13;
-}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Singleton Design Pattern" enabled="true" name="singleton">private static var Singleton:${enclosing_type};&#13;
-public static function getInstance():${enclosing_type} { if ( Singleton == null ){ Singleton = new ${enclosing_type}(); } return Singleton;}&#13;
+}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Singleton Design Pattern" enabled="true" name="singleton">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
+private static var Singleton:${enclosing_type};&#13;
+public static function getInstance():${enclosing_type}{&#13;
+	if ( Singleton == null ){ &#13;
+		Singleton = new ${enclosing_type}(); &#13;
+	}&#13;
+	return Singleton;&#13;
+}&#13;
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -&#13;
 ${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="Quick code paste of general stage setup" enabled="true" name="ss">stage.align = StageAlign.TOP_LEFT;&#13;
 stage.scaleMode = StageScaleMode.NO_SCALE; //.EXACT_FIT;&#13;
 //stage.quality = StageQuality.HIGH;&#13;
 			&#13;
 stage.fullScreenSourceRect = new Rectangle(0,0,${SWF_Width},${SWF_Height}); // Enables hardware scale rendering&#13;
-				&#13;
+&#13;
+/*			&#13;
 if (stage.allowsFullScreen){&#13;
 	stage.displayState = StageDisplayState.FULL_SCREEN;&#13;
 	stage.displayState = StageDisplayState.FULL_SCREEN_INTERACTIVE;&#13;
 }&#13;
+*/&#13;
 &#13;
 stage.stageFocusRect = false;&#13;
 &#13;
-//Vars.stage = stage;</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="SWF Configuration" enabled="true" name="swf">[SWF(backgroundColor="#${RGB_Hex_Value}", width="${SWF_Width}", height="${SWF_Height}", frameRate="${SWF_FrameRate}")]</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script_statement" deleted="false" description="Creates a switch block" enabled="true" id="com.adobe.flexide.as.core.codetemplates.switch" name="switch">switch(${expression})&#13;
+//Vars.stage = stage;&#13;
+${cursor}</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script" deleted="false" description="SWF Configuration" enabled="true" name="swf">[SWF(backgroundColor="#${RGB_Hex_Value}", width="${SWF_Width}", height="${SWF_Height}", frameRate="${SWF_FrameRate}")]</template><template autoinsert="true" context="com.adobe.flexide.as.core.codetemplates.action_script_statement" deleted="false" description="Creates a switch block" enabled="true" id="com.adobe.flexide.as.core.codetemplates.switch" name="switch">switch(${expression})&#13;
 {&#13;
 	case ${result}:&#13;
 	{&#13;
