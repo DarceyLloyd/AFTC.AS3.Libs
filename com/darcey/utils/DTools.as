@@ -50,6 +50,42 @@ package com.darcey.utils
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function booleanToString(bool:Boolean):String
+		{
+			if (bool){
+				return "yes";
+			} else {
+				return "no";
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function booleanToNumber(bool:Boolean):Number
+		{
+			if (bool){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function booleanToInt(bool:Boolean):int
+		{
+			if (bool){
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
