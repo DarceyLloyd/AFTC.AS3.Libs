@@ -187,8 +187,11 @@ package com.darcey.debug
 		// ----------------------------------------------------------------------------------------------------
 		public function add(str:String):void
 		{
-			//txtArea.text += str + "\n";
+			//var tmp:String = txtArea.text;
+			//txtArea.text = str + "\n" + tmp;
+			//tmp = null;
 			txtArea.appendText(str + "\n");
+			txtArea.scrollV = txtArea.maxScrollV;
 		}
 		// ----------------------------------------------------------------------------------------------------
 		

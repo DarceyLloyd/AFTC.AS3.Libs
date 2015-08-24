@@ -43,6 +43,8 @@ package com.darcey.video
 		public var duration:Number = 0;
 		
 		public var videoVolumeTransform:SoundTransform;
+		
+		public var isPlaying:Boolean;
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
@@ -51,7 +53,7 @@ package com.darcey.video
 		public function CustomVideoPlayer(stageRef:Stage,src:String,videoW:Number=640,videoH:Number=480,autoPlay:Boolean=false,repeat:Boolean=true)
 		{
 			// Setup class specific tracer
-			t = new Ttrace(false);
+			t = new Ttrace(true);
 			t.ttrace("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
 			
 			
