@@ -32,7 +32,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("XMLLoader()");
+			t.string("XMLLoader()");
 			
 			// Setup the loader
 			urlLoader = new URLLoader();
@@ -67,7 +67,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private function onCompleteHandler(e:Event):void
 		{
-			t.ttrace("com.darcey.io.LoadXMLFile.onCompleteHandler(e)");
+			t.string("com.darcey.io.LoadXMLFile.onCompleteHandler(e)");
 			
 			xmlData = new XML(e.target.data);
 			dispatchEvent( e );

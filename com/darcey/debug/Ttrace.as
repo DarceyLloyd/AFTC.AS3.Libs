@@ -1,591 +1,113 @@
 package com.darcey.debug
-{		
-	// ----------------------------------------------------------------------------------------
-	// Author: Darcey.Lloyd@gmail.com
-	// ----------------------------------------------------------------------------------------
+{
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	import flash.display.Stage;
 
-	// ----------------------------------------------------------------------------------------
-	import com.darcey.debug.DebugBox;
-	import com.darcey.utils.JavaScriptNotification;
-	
-	import flash.display.Sprite;
-	import flash.net.URLLoader;
-	import flash.net.URLLoaderDataFormat;
-	import flash.net.URLRequest;
-	import flash.net.URLRequestMethod;
-	import flash.net.URLVariables;
-	import flash.text.Font;
-	import flash.utils.describeType;
-
-	// ----------------------------------------------------------------------------------------
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	
 	
-	// ----------------------------------------------------------------------------------------
-	public class Ttrace extends Sprite
+	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+	public class Ttrace
 	{
-		// ----------------------------------------------------------------------------------------
-		public var enabled:Boolean;
-		public function enable():void { enabled = true; }
-		public function disable():void { enabled = false; }
-		// ----------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public var enabled:Boolean = true;
+		private var log:Log;
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
 		
 		
-		// ----------------------------------------------------------------------------------------
-		
-		
-		public function Ttrace(enabled:Boolean,applicationName:String="",useDebugBox:Boolean=false,debugBoxVisible:Boolean=true,debugBoxTitle:String="",debugBoxWidth:Number=800,debugBoxHeight:Number=400):void
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function Ttrace(enabled:Boolean,argStage:Stage=null,argWidth:Number=600,argHeight:Number=400):void
 		{
-			// Var ini
 			this.enabled = enabled;
+			log = Log.getInstance();
 			
-			// Only set these variable when TtraceVO has not been set
-			if (!TtraceVO.variablesSet)
-			{
-				//trace("############################################################ SETTING VARS #### ");
-				if (applicationName != ""){
-					TtraceVO.applicationName = applicationName + ": ";
-				}
-				TtraceVO.debugBoxTitle = debugBoxTitle;
-				TtraceVO.useDebugBox = useDebugBox;
-				TtraceVO.debugBoxVisible = debugBoxVisible;
-				TtraceVO.debugBoxWidth = debugBoxWidth;
-				TtraceVO.debugBoxHeight = debugBoxHeight;
-				TtraceVO.variablesSet = true;
+			if (argStage!=null){
+				stage = argStage;
 			}
+			
+			if (argWidth>0){
+				width = argWidth;
+			}
+			
+			if (argHeight>0){
+				height = argHeight;
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function set width(value:Number):void {
+			log.visualDebugWidth = value;
+		}
+		public function get width():Number {
+			return log.visualDebugWidth;
+		}
+		public function set height(value:Number):void {
+			log.visualDebugHeight = value;
+		}
+		public function get height():Number {
+			return log.visualDebugHeight;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function set stage(stage:Stage):void {
+			log.stage = stage;
+		}
+		public function get stage():Stage {
+			return log.stage;
+		}
+		public function globalDisable(arg:Boolean):void {
+			log.globalDisable = arg;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
 
-			
-			
-			
-			//trace("############################################################ TtraceVO.applicationName = " + TtraceVO.applicationName);
-			
-			
-			// Check for debug box even though it may be set to false
-			if (DebugBox.Singleton == null)
-			{
-				// There is no singleton of debug box so we create one if asked to 
-				if (TtraceVO.useDebugBox){
-					if (TtraceVO.debugBox == null){
-						TtraceVO.debugBox = DebugBox.getInstance();
-						TtraceVO.debugBox.init(TtraceVO.debugBoxWidth,TtraceVO.debugBoxHeight,debugBoxVisible,debugBoxTitle);
-						addChild(TtraceVO.debugBox);
-					}
-				}					
-			} else {
-				// There is already an instance of debug box so use it
-				TtraceVO.debugBox = DebugBox.getInstance();
-			}
-		}
-		// ----------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function s(arg:String):void { if (!enabled){ return; } log.string(arg); }
+		public function str(arg:String):void { if (!enabled){ return; } log.string(arg); }
+		public function string(arg:String):void { if (!enabled){ return; } log.string(arg); }
+		
+		public function a(arg:Array):void { if (!enabled){ return; } log.array(arg); }
+		public function arr(arg:Array):void { if (!enabled){ return; } log.array(arg); }
+		public function array(arg:Array):void { if (!enabled){ return; } log.array(arg); }
+		
+		public function o(arg:Object):void { if (!enabled){ return; } log.object(arg); }
+		public function obj(arg:Object):void { if (!enabled){ return; } log.object(arg); }
+		public function object(arg:Object):void { if (!enabled){ return; } log.object(arg); }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function ttrace(arg:String):void { if (!enabled){ return; } log.string(arg); } // For compat
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function div():void { if (!enabled){ return; } log.div(); }
+		public function error(arg:String):void { if (!enabled){ return; } log.warn(arg); }
+		public function warn(arg:String):void { if (!enabled){ return; } log.warn(arg); }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function show():void { log.show(); }
+		public function hide():void { log.hide(); }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
-		// ----------------------------------------------------------------------------------------
-		public function error(param:Object=null):void
-		{
-			var inputType:String = typeof param;
-			var msg:String = "\n######## ERROR ON APPLICATION " + TtraceVO.applicationName + " ########" + "\n";
-			
-			switch (inputType)
-			{
-				// ------------------------------------------------------------
-				default:
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					throw new Error(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "xml":
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					throw new Error(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case null:
-					msg += TtraceVO.applicationName + "TTrace got a NULL input";
-					addToDebugBox(msg);
-					throw new Error(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "string":
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					throw new Error(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "object":
-					
-					if (param.length)
-					{
-						msg += TtraceVO.applicationName + "Array:\t" + "Length:(" + param.length + "): [" + param + "]" + "\n";
-						
-						for (var ii:String in param){
-							msg += "\t" + TtraceVO.applicationName + "Index[" + ii + "] = " + param[ii] + "\n";
-						}
-						
-						msg += "------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						throw new Error(msg);
-					} else {
-						msg += TtraceVO.applicationName + "Object:" + "\n";
-						
-						try {
-							msg += describeType( param ).toXMLString() + "\n";
-						} catch (e:Error) {}
-						
-						for(var id:String in param) {
-							var value:Object = param[id];
-							
-							msg += "\t" + id + " = " + value + "\n";
-						}
-						
-						msg += "-------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						throw new Error(msg);
-					}
-					break;
-				// ------------------------------------------------------------
-			} // End switch
-		}
-		// ----------------------------------------------------------------------------------------
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public function clear():void { log.clear(); }
+		public function dispose():void { log.clear(); log.dispose; log = null; }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function warn(param:Object=null):void
-		{
-			var inputType:String = typeof param;
-			var msg:String = "#################################################################################\n######## WARNING ON APPLICATION: " + TtraceVO.applicationName + " ########" + "\n";
-			
-			switch (inputType)
-			{
-				// ------------------------------------------------------------
-				default:
-					msg += TtraceVO.applicationName + param;
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "xml":
-					msg += TtraceVO.applicationName + param;
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case null:
-					msg += TtraceVO.applicationName + "TTrace got a NULL input";
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "string":
-					msg += TtraceVO.applicationName + param;
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "object":
-					
-					if (param.length)
-					{
-						msg += TtraceVO.applicationName + "Array:\t" + "Length:(" + param.length + "): [" + param + "]" + "\n";
-						
-						for (var ii:String in param){
-							msg += "\t" + "Index[" + ii + "] = " + param[ii] + "\n";
-						}
-						
-						msg += "------------------------------------------------------------------------" + "\n";
-					} else {
-						msg += TtraceVO.applicationName + "Object:" + "\n";
-						
-						try {
-							msg += describeType( param ).toXMLString() + "\n";
-						} catch (e:Error) {}
-						
-						for(var id:String in param) {
-							var value:Object = param[id];
-							
-							msg += "\t" + id + " = " + value + "\n";
-						}
-						
-						msg += "-------------------------------------------------------------------------" + "\n";
-					}
-					break;
-				// ------------------------------------------------------------
-			} // End switch
-			
-			
-			msg += "\n#################################################################################";
-			
-			addToDebugBox(msg);
-			trace(msg);
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function div():String
-		{
-			if (enabled)
-			{
-				var msg:String = "#################################################################################";
-				addToDebugBox(msg);
-				trace(msg);
-				return msg;
-			} else {
-				return "";
-			}
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function wdiv():void
-		{
-			var msg:String = "#################################################################################";
-			addToDebugBox(msg);
-			trace(msg);
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		// FOR LOGGING DEBUG INFO VIA THE WEB WHEN OUTPUT IS NOT POSSIBLE ON DEVICE
-		// ----------------------------------------------------------------------------------------
-		private var url:String = "http://www.aftc.co.uk/log/log.php";
-		private var onlineLoggingEnabled:Boolean = false;
-		public function enableOnlineLogging():void {
-			onlineLoggingEnabled = true;
-		}
-		public function clearLog():void {
-			var variables:URLVariables = new URLVariables();
-			variables.msg = "DELETE";
-			
-			var request:URLRequest = new URLRequest(url);
-			request.method = URLRequestMethod.GET;
-			request.data = variables;
-			
-			var loader:URLLoader = new URLLoader();
-			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
-			loader.load(request);
-		}
-		public function log(msg:String):void {			
-			var variables:URLVariables = new URLVariables();
-			variables.msg = msg;
-			
-			var request:URLRequest = new URLRequest(url);
-			request.method = URLRequestMethod.GET;
-			request.data = variables;
-			
-			var loader:URLLoader = new URLLoader();
-			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
-			loader.load(request);
-			
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function ttrace(param:Object=null):String
-		{			
-			// Check if class specific tracing has been enabled (keeps things clean)
-			if (enabled)
-			{
-				var inputType:String = typeof param;
-				//trace("---------------------------" + inputType + "-------------------------");
-				var msg:String = "";
-				
-				switch (inputType)
-				{
-					// ------------------------------------------------------------
-					default:
-						msg += TtraceVO.applicationName + param;
-						addToDebugBox(msg);
-						trace(msg);
-						//new JavaScriptNotification(msg);
-						break;
-					// ------------------------------------------------------------
-					
-					// ------------------------------------------------------------
-					case "xml":
-						msg += TtraceVO.applicationName + param;
-						addToDebugBox(msg);
-						trace(msg);
-						//new JavaScriptNotification(msg);
-						break;
-					// ------------------------------------------------------------
-					
-					// ------------------------------------------------------------
-					case null:
-						msg += TtraceVO.applicationName + "TTrace got a NULL input";
-						addToDebugBox(msg);
-						trace(msg);
-						//new JavaScriptNotification(msg);
-						break;
-					// ------------------------------------------------------------
-					
-					// ------------------------------------------------------------
-					case "string":
-						msg += TtraceVO.applicationName + param;
-						addToDebugBox(msg);
-						trace(msg);
-						//new JavaScriptNotification(msg);
-						break;
-					// ------------------------------------------------------------
-					
-					// ------------------------------------------------------------
-					case "object":
-						// Sometimes an error can occur here due to length not being defined to an xml object
-						var lengthAvailable:Boolean = true;
-						try {
-							if (param.length > 0){
-								
-							}
-						} catch (e:Error) {
-							lengthAvailable = false;
-						}
-						
-						if (!lengthAvailable){
-							msg += "------------------------------------------------------------------------" + "\n";
-							msg += TtraceVO.applicationName + "Object:" + "\n";
-							
-							try {
-								msg += describeType( param ).toXMLString() + "\n";
-							} catch (e:Error) {}
-							
-							for(var id:String in param) {
-								var value:Object = param[id];
-								
-								msg += "\t" + id + " = " + value + "\n";
-							}
-							
-							msg += "-------------------------------------------------------------------------" + "\n";
-							
-							addToDebugBox(msg);
-							trace(msg);
-							return msg;
-						}
-						
-						if (param.length)
-						{
-							msg += "------------------------------------------------------------------------" + "\n";
-							msg += TtraceVO.applicationName + "Array:\t" + "Length:(" + param.length + "): [" + param + "]" + "\n";
-							
-							for (var ii:String in param){
-								msg += "\t" + "Index[" + ii + "] = " + param[ii] + "\n";
-							}
-							
-							msg += "------------------------------------------------------------------------" + "\n";
-							
-							addToDebugBox(msg);
-							trace(msg);
-						} else {
-							msg += "------------------------------------------------------------------------" + "\n";
-							msg += TtraceVO.applicationName + "Object:" + "\n";
-							
-							try {
-								msg += describeType( param ).toXMLString() + "\n";
-							} catch (e:Error) {}
-							
-							for(var ida:String in param) {
-								var valuea:Object = param[ida];
-								
-								msg += "\t" + ida + " = " + valuea + "\n";
-							}
-							
-							msg += "-------------------------------------------------------------------------" + "\n";
-							
-							addToDebugBox(msg);
-							trace(msg);
-						}
-						break;
-					// ------------------------------------------------------------
-				} // End switch
-			} // End if
-			
-			return msg;
-			msg = "";
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function ttry(param:Object=null):void
-		{
-			try {
-				trace(param);
-			} catch (e:Error) {}
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function force(param:Object=null):void
-		{			
-			var inputType:String = typeof param;
-			var msg:String = "";
-			
-			switch (inputType)
-			{
-				// ------------------------------------------------------------
-				default:
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "xml":
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case null:
-					msg += TtraceVO.applicationName + "TTrace got a NULL input";
-					addToDebugBox(msg);
-					trace(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "string":
-					msg += TtraceVO.applicationName + param;
-					addToDebugBox(msg);
-					trace(msg);
-					break;
-				// ------------------------------------------------------------
-				
-				// ------------------------------------------------------------
-				case "object":
-					
-					if (param.length)
-					{
-						msg += "------------------------------------------------------------------------" + "\n";
-						msg += TtraceVO.applicationName + "Array:\t" + "Length:(" + param.length + "): [" + param + "]" + "\n";
-						
-						for (var ii:String in param){
-							msg += "\t" + "Index[" + ii + "] = " + param[ii] + "\n";
-						}
-						
-						msg += "------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						trace(msg);
-					} else {
-						msg += "------------------------------------------------------------------------" + "\n";
-						msg += TtraceVO.applicationName + "Object:" + "\n";
-						
-						try {
-							msg += describeType( param ).toXMLString() + "\n";
-						} catch (e:Error) {}
-						
-						for(var id:String in param) {
-							var value:Object = param[id];
-							
-							msg += "\t" + id + " = " + value + "\n";
-						}
-						
-						msg += "-------------------------------------------------------------------------" + "\n";
-						
-						addToDebugBox(msg);
-						trace(msg);
-					}
-					break;
-				// ------------------------------------------------------------
-			} // End switch
-			
-			msg = "";
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		
-		
-		
-		// ---------------------------------------------------------------------------------------------------------------------
-		public function traceAvailableFonts():void
-		{			
-			var msg:String = "---------------------------------------------------------------------------\n";
-			msg += "FONTS AVAILABLE to [" + TtraceVO.applicationName + "]\n";			
-			
-			var fonts:Array = Font.enumerateFonts().sortOn("fontName");
-			for (var i:int = 0; i < fonts.length; i++)
-			{
-				var font:Font = fonts[i];
-				msg += "\t" + i + ") fontName: [" + font.fontName + "]   fontStyle: [" + font.fontStyle + "]   fontType: [" + font.fontType + "]\n";
-			}
-			msg += "---------------------------------------------------------------------------";
-			ttrace(msg);
-			msg = "";
-		}
-		// ---------------------------------------------------------------------------------------------------------------------
-		
-		
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function attachDebugBox(debugBox:DebugBox):void
-		{
-			TtraceVO.debugBox = debugBox;
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		// ----------------------------------------------------------------------------------------
-		private function addToDebugBox(str:String):void
-		{
-			if (TtraceVO.debugBox)
-			{
-				TtraceVO.debugBox.add(str);
-			}
-		}
-		// ----------------------------------------------------------------------------------------
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function clear():void
-		{
-			if (debugbox)
-			{
-				debugbox.clear();
-			}
-		}
-		
-		
-		public function setDebugBoxFontSize(n:Number):void
-		{
-			if (debugbox){
-				debugbox.setFontSize(n);
-			}
-		}
-		
-		
-		// ----------------------------------------------------------------------------------------
-		public function get debugbox():DebugBox {
-			return TtraceVO.debugBox;	
-		}
-		// ----------------------------------------------------------------------------------------
 		
 	}
 }

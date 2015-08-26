@@ -6,7 +6,7 @@ package com.darcey.debug
 
 	public class TraceAvailableFonts
 	{
-
+		private var log:Log;
 		private var msg:String = "";
 		
 		// ---------------------------------------------------------------------------------------------------------------------
@@ -22,7 +22,9 @@ package com.darcey.debug
 				msg += "\t" + i + ") fontName: [" + font.fontName + "]   fontStyle: [" + font.fontStyle + "]   fontType: [" + font.fontType + "]\n";
 			}
 			msg += "---------------------------------------------------------------------------";
-			trace(msg);
+			
+			log = Log.getInstance();
+			log.string(msg);
 		}
 		// ---------------------------------------------------------------------------------------------------------------------
 		

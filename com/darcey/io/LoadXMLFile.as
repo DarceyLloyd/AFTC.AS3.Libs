@@ -32,7 +32,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("com.darcey.io.LoadXMLFile.LoadXMLFile()");
+			t.string("com.darcey.io.LoadXMLFile.LoadXMLFile()");
 			
 			// Var ini
 			this.customEventCompleteString = customEventCompleteString;
@@ -55,7 +55,7 @@ package com.darcey.io
 			if (showTrace){
 				t.enable();
 			}
-			t.ttrace("com.darcey.io.LoadXMLFile.load(file"+file+")");			
+			t.string("com.darcey.io.LoadXMLFile.load(file"+file+")");			
 			
 			this.file = file;
 			urlLoader.load(new URLRequest(file));			
@@ -75,7 +75,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private function onCompleteHandler(e:Event):void
 		{
-			t.ttrace("com.darcey.io.LoadXMLFile.onCompleteHandler(e)");
+			t.string("com.darcey.io.LoadXMLFile.onCompleteHandler(e)");
 			
 			var params:Object = new Object();
 			params.xml = new XML(e.target.data);

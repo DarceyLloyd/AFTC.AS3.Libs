@@ -65,7 +65,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("XMLAssetListLoader.XMLAssetListLoader()");
+			t.string("XMLAssetListLoader.XMLAssetListLoader()");
 			
 			// Var ini
 			queName = "LoaderMaxQue" + r;
@@ -130,39 +130,39 @@ package com.darcey.io
 					appendToFileString = "";
 				}
 				
-				//t.ttrace("XMLAssetListLoader: Adding file:[" + file + "]  kb:[" + kb + "]");
+				//t.string("XMLAssetListLoader: Adding file:[" + file + "]  kb:[" + kb + "]");
 				
 				
 				
 				switch (type.toLowerCase())
 				{
 					case "swf":
-						t.ttrace("XMLAssetListLoader: added swf " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added swf " + file+appendToFileString);
 						loader.append( new SWFLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024),autoPlay:false, context: new LoaderContext(true, ApplicationDomain.currentDomain)}) );
 						break;
 					
 					case "mp3":
-						t.ttrace("XMLAssetListLoader: added mp3 " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added mp3 " + file+appendToFileString);
 						loader.append( new MP3Loader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
 					case "video":
-						t.ttrace("XMLAssetListLoader: added video " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added video " + file+appendToFileString);
 						loader.append( new VideoLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
 					case "image":
-						t.ttrace("XMLAssetListLoader: added image " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added image " + file+appendToFileString);
 						loader.append( new ImageLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
 					case "xml":
-						t.ttrace("XMLAssetListLoader: added xml " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added xml " + file+appendToFileString);
 						loader.append( new com.greensock.loading.XMLLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
 					case "css":
-						t.ttrace("XMLAssetListLoader: added css " + file+appendToFileString);
+						t.string("XMLAssetListLoader: added css " + file+appendToFileString);
 						loader.append( new CSSLoader(file+appendToFileString,{ name:name,estimatedBytes:(kb*1024) } ));
 						break;
 					
@@ -186,7 +186,7 @@ package com.darcey.io
 			var index:int = loader.getChildIndex(e.target as LoaderCore);
 			//percentLoaded = e.target.progress * 1000;
 			percentLoaded = Math.round(e.target.progress * 1000) / 10;
-			//t.ttrace("UTIL: e.target = " + e.target + " - progress = " + e.target.progress);
+			//t.string("UTIL: e.target = " + e.target + " - progress = " + e.target.progress);
 			
 			dispatchEvent( new ProgressEvent(ProgressEvent.PROGRESS,false,false,e.target.bytesLoaded,e.target.bytesTotal) );
 			//dispatchEvent(e);
@@ -201,7 +201,7 @@ package com.darcey.io
 		{
 			var index:int = loader.getChildIndex(e.target as LoaderCore);
 			//trace(e.target.name + " finished, and it is in position " + index + " of the queue.");
-			//t.ttrace("Preloader().childCompleteHandler(): LOAD COMPLETE OF [" + e.target + "]");
+			//t.string("Preloader().childCompleteHandler(): LOAD COMPLETE OF [" + e.target + "]");
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -220,7 +220,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function completeHandler(e:LoaderEvent):void
 		{
-			t.ttrace("XMLAssetListLoader.completeHandler(e)");
+			t.string("XMLAssetListLoader.completeHandler(e)");
 			this.complete = true;
 			dispatchEvent( new Event(Event.COMPLETE) );
 		}
@@ -231,7 +231,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getSWF(name:String):*
 		{
-			t.ttrace("XMLAssetListLoader.getSWF(name:"+name+")");
+			t.string("XMLAssetListLoader.getSWF(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			var swfLoader:SWFLoader = loader.getLoader(name);
@@ -241,7 +241,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getXML(name:String):XML
 		{
-			t.ttrace("XMLAssetListLoader.getXML(name:"+name+")");
+			t.string("XMLAssetListLoader.getXML(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			return new XML(loader.getContent(name));
@@ -249,7 +249,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getSWFLoader(name:String):*
 		{
-			t.ttrace("XMLAssetListLoader.getSWFLoader(name:"+name+")");
+			t.string("XMLAssetListLoader.getSWFLoader(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			var swfLoader:SWFLoader = loader.getLoader(name);
@@ -258,7 +258,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getContent(name:String):*
 		{
-			t.ttrace("XMLAssetListLoader.getContent(name:"+name+")");
+			t.string("XMLAssetListLoader.getContent(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			return loader.getContent(name);
@@ -266,7 +266,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getLoader(name:String):*
 		{
-			t.ttrace("XMLAssetListLoader.getLoader(name:"+name+")");
+			t.string("XMLAssetListLoader.getLoader(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			return loader.getLoader(name);
@@ -274,7 +274,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getMovieClipFromRawContent(name:String):MovieClip
 		{
-			t.ttrace("XMLAssetListLoader.getMovieClipFromRawContent(name:"+name+")");
+			t.string("XMLAssetListLoader.getMovieClipFromRawContent(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			var swfLoader:SWFLoader = loader.getLoader(name);
@@ -285,7 +285,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getBitmapData(name:String):BitmapData
 		{
-			t.ttrace("XMLAssetListLoader.getBitmapData(name:"+name+")");
+			t.string("XMLAssetListLoader.getBitmapData(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			return loader.getLoader(name).rawContent.bitmapData;
@@ -293,7 +293,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getBitmap(name:String,smoothing:Boolean=false,pixelSnapping:String="auto"):Bitmap
 		{
-			t.ttrace("XMLAssetListLoader.getBitmap(name:"+name+")");
+			t.string("XMLAssetListLoader.getBitmap(name:"+name+")");
 			if (!checkLoaded()){ return null; }
 			
 			

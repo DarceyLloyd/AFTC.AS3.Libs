@@ -54,7 +54,7 @@ package com.darcey.video
 		{
 			// Setup class specific tracer
 			t = new Ttrace(true);
-			t.ttrace("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
+			t.string("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
 			
 			
 			// Var ini
@@ -78,7 +78,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function init():void
 		{
-			t.ttrace("CustomVideoPlayer.init()");
+			t.string("CustomVideoPlayer.init()");
 			
 			nc = new NetConnection();
 			nc.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
@@ -100,18 +100,18 @@ package com.darcey.video
 		private function netStatusHandler(event:NetStatusEvent):void {
 			switch (event.info.code) {
 				case "NetConnection.Connect.Success":
-					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Connection success");
+					t.string("CustomVideoPlayer.netStatusHandler(event): Connection success");
 					connectStream();
 					break;
 				case "NetStream.Play.StreamNotFound":
-					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
+					t.string("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
 					break;
 				case "NetStream.Play.Stop":
-					t.ttrace("CustomVideoPlayer.netStatusHandler(event): Playback complete");
+					t.string("CustomVideoPlayer.netStatusHandler(event): Playback complete");
 					dispatchEvent( new Event( Event.COMPLETE ) );
 					break;
 				default:
-					t.ttrace("CustomVideoPlayer.netStatusHandler(event): code = " + event.info.code);
+					t.string("CustomVideoPlayer.netStatusHandler(event): code = " + event.info.code);
 					dispatchEvent( new CustomEvent(event.info.code) );
 					break;
 			}
@@ -159,7 +159,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function cuePointHandler(e:CustomEvent):void
 		{
-			t.ttrace("CustomVideoPlayer.cuePointHandler(e)");
+			t.string("CustomVideoPlayer.cuePointHandler(e)");
 			
 			dispatchEvent( e );
 		}
@@ -250,7 +250,7 @@ package com.darcey.video
 		
 		public function dispose():void
 		{
-			t.ttrace("CustomVideoPlayer.dispose()");
+			t.string("CustomVideoPlayer.dispose()");
 			new RemoveAllChildrenIn(this);
 			
 			try {
@@ -280,11 +280,11 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onNCStatus(e:NetStatusEvent):void
 		{
-			t.ttrace("");
-			t.ttrace("CustomVideoPlayer.onNCStatus(e): " + e.type + "  " + e.info);
+			t.string("");
+			t.string("CustomVideoPlayer.onNCStatus(e): " + e.type + "  " + e.info);
 			
 			
-			t.ttrace("### e.info.code: " + e.info.code);
+			t.string("### e.info.code: " + e.info.code);
 			
 			switch (e.info.code)
 			{
@@ -319,7 +319,7 @@ package com.darcey.video
 		private function liveStreamStatusEventsHandler(e:NetStatusEvent):void
 		{
 			t.div();
-			t.ttrace("CustomVideoPlayer.liveStreamStatusEventsHandler(e): e.info.code = [" + e.info.code + "]");
+			t.string("CustomVideoPlayer.liveStreamStatusEventsHandler(e): e.info.code = [" + e.info.code + "]");
 			
 			
 			switch (e.info.code)
@@ -360,12 +360,12 @@ package com.darcey.video
 				if (ns.bytesTotal == ns.bytesLoaded){
 					if (!videoLoadedFlagged){
 						videoLoadedFlagged = true;
-						t.ttrace("LOADING COMPLETE [" + url + "]");
+						t.string("LOADING COMPLETE [" + url + "]");
 						dispatchEvent( new CustomEvent("loading complete") );
 					}
 				} else {
 					var p:Number = Math.round(   (((100/ns.bytesTotal) * ns.bytesLoaded)*10)      ) / 10;
-					t.ttrace("LOADING [" + url + "] - " + p + "%     ns.bytesTotal: [" + ns.bytesTotal + "]   ns.bytesLoaded: [" + ns.bytesLoaded + "]");
+					t.string("LOADING [" + url + "] - " + p + "%     ns.bytesTotal: [" + ns.bytesTotal + "]   ns.bytesLoaded: [" + ns.bytesLoaded + "]");
 				}
 				
 				
@@ -382,7 +382,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function playbackComplete(e:Event):void
 		{
-			t.ttrace("##### VIDEO PLAYBACK COMPLETE [ " + this.url + "] #####");
+			t.string("##### VIDEO PLAYBACK COMPLETE [ " + this.url + "] #####");
 			dispatchEvent( new Event(Event.COMPLETE) );			
 			
 			try {
@@ -405,7 +405,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onMetaDataHandler(o:Object):void
 		{
-			t.ttrace("CustomVideoPlayer.onMetaDataHandler(o): " + o);
+			t.string("CustomVideoPlayer.onMetaDataHandler(o): " + o);
 			
 		}  
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -414,8 +414,8 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onCuePointHandler(o:Object):void
 		{
-			t.ttrace("CustomVideoPlayer.onCuePointHandler(o): " + o);
-			//t.ttrace(o.name + "\t" + o.time);
+			t.string("CustomVideoPlayer.onCuePointHandler(o): " + o);
+			//t.string(o.name + "\t" + o.time);
 		}  
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -426,7 +426,7 @@ package com.darcey.video
 		
 		public function play():void
 		{
-			t.ttrace("CustomVideoPlayer.play()");
+			t.string("CustomVideoPlayer.play()");
 			ns.play(url);
 			//ns.resume();
 		}
@@ -434,24 +434,24 @@ package com.darcey.video
 		
 		public function seek(time:Number):void
 		{
-			t.ttrace("CustomVideoPlayer.seek(time:"+time+")");
+			t.string("CustomVideoPlayer.seek(time:"+time+")");
 			ns.seek(time);
 		}
 		
 		public function resume():void
 		{
-			t.ttrace("CustomVideoPlayer.resume()");
+			t.string("CustomVideoPlayer.resume()");
 			ns.resume();
 		}
 		
 		public function stop():void
 		{
 			if (ns){
-				t.ttrace("CustomVideoPlayer.stop()");
+				t.string("CustomVideoPlayer.stop()");
 				ns.pause();
 				ns.seek(0);
 			} else {
-				t.ttrace("CustomVideoPlayer.stop() error");
+				t.string("CustomVideoPlayer.stop() error");
 			}
 		}
 		
@@ -466,7 +466,7 @@ package com.darcey.video
 		
 		public function dispose():void
 		{
-			t.ttrace("CustomVideoPlayer.dispose()");
+			t.string("CustomVideoPlayer.dispose()");
 			new RemoveAllChildrenIn(this);
 			
 			try {

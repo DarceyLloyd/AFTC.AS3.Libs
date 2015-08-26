@@ -49,7 +49,7 @@ package com.darcey.video
 		{
 			// Setup class specific tracer
 			t = new Ttrace(true);
-			t.ttrace("CustomEmbeddedVideoPlayer(stageRef, videoClass, videoW, videoH, autoPlay, repeat)");
+			t.string("CustomEmbeddedVideoPlayer(stageRef, videoClass, videoW, videoH, autoPlay, repeat)");
 			
 			
 			
@@ -74,7 +74,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function init():void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.init()");
+			t.string("CustomEmbeddedVideoPlayer.init()");
 			
 			nc = new NetConnection();
 			nc.addEventListener(NetStatusEvent.NET_STATUS, netStatusHandler);
@@ -96,18 +96,18 @@ package com.darcey.video
 		private function netStatusHandler(event:NetStatusEvent):void {
 			switch (event.info.code) {
 				case "NetConnection.Connect.Success":
-					t.ttrace("CustomEmbeddedVideoPlayer.netStatusHandler(event): Connection success");
+					t.string("CustomEmbeddedVideoPlayer.netStatusHandler(event): Connection success");
 					connectStream();
 					break;
 				case "NetStream.Play.StreamNotFound":
-					t.ttrace("CustomEmbeddedVideoPlayer.netStatusHandler(event): Embedded stream not found!");
+					t.string("CustomEmbeddedVideoPlayer.netStatusHandler(event): Embedded stream not found!");
 					break;
 				case "NetStream.Play.Stop":
-					t.ttrace("CustomEmbeddedVideoPlayer.netStatusHandler(event): Playback complete");
+					t.string("CustomEmbeddedVideoPlayer.netStatusHandler(event): Playback complete");
 					dispatchEvent( new Event( Event.COMPLETE ) );
 					break;
 				default:
-					t.ttrace("CustomEmbeddedVideoPlayer.netStatusHandler(event): code = " + event.info.code);
+					t.string("CustomEmbeddedVideoPlayer.netStatusHandler(event): code = " + event.info.code);
 					break;
 			}
 		}
@@ -185,11 +185,11 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onNCStatus(e:NetStatusEvent):void
 		{
-			t.ttrace("");
-			t.ttrace("CustomEmbeddedVideoPlayer.onNCStatus(e): " + e.type + "  " + e.info);
+			t.string("");
+			t.string("CustomEmbeddedVideoPlayer.onNCStatus(e): " + e.type + "  " + e.info);
 			
 			
-			t.ttrace("### e.info.code: " + e.info.code);
+			t.string("### e.info.code: " + e.info.code);
 			
 			switch (e.info.code)
 			{
@@ -224,7 +224,7 @@ package com.darcey.video
 		private function liveStreamStatusEventsHandler(e:NetStatusEvent):void
 		{
 			t.div();
-			t.ttrace("CustomEmbeddedVideoPlayer.liveStreamStatusEventsHandler(e): e.info.code = [" + e.info.code + "]");
+			t.string("CustomEmbeddedVideoPlayer.liveStreamStatusEventsHandler(e): e.info.code = [" + e.info.code + "]");
 			
 			
 			switch (e.info.code)
@@ -265,12 +265,12 @@ package com.darcey.video
 				if (ns.bytesTotal == ns.bytesLoaded){
 					if (!videoLoadedFlagged){
 						videoLoadedFlagged = true;
-						t.ttrace("LOADING COMPLETE [" + url + "]");
+						t.string("LOADING COMPLETE [" + url + "]");
 						dispatchEvent( new CustomEvent("loading complete") );
 					}
 				} else {
 					var p:Number = Math.round(   (((100/ns.bytesTotal) * ns.bytesLoaded)*10)      ) / 10;
-					t.ttrace("LOADING [" + url + "] - " + p + "%     ns.bytesTotal: [" + ns.bytesTotal + "]   ns.bytesLoaded: [" + ns.bytesLoaded + "]");
+					t.string("LOADING [" + url + "] - " + p + "%     ns.bytesTotal: [" + ns.bytesTotal + "]   ns.bytesLoaded: [" + ns.bytesLoaded + "]");
 				}
 				
 				
@@ -287,7 +287,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function playbackComplete(e:Event):void
 		{
-			t.ttrace("##### VIDEO PLAYBACK COMPLETE [ " + this.url + "] #####");
+			t.string("##### VIDEO PLAYBACK COMPLETE [ " + this.url + "] #####");
 			dispatchEvent( new Event(Event.COMPLETE) );			
 			
 			try {
@@ -310,7 +310,7 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onMetaDataHandler(o:Object):void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.onMetaDataHandler(o): " + o);
+			t.string("CustomEmbeddedVideoPlayer.onMetaDataHandler(o): " + o);
 			
 		}  
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -319,8 +319,8 @@ package com.darcey.video
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function onCuePointHandler(o:Object):void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.onCuePointHandler(o): " + o);
-			//t.ttrace(o.name + "\t" + o.time);
+			t.string("CustomEmbeddedVideoPlayer.onCuePointHandler(o): " + o);
+			//t.string(o.name + "\t" + o.time);
 		}  
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -331,7 +331,7 @@ package com.darcey.video
 		
 		public function play():void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.play()");
+			t.string("CustomEmbeddedVideoPlayer.play()");
 			ns.play(url);
 			//ns.resume();
 		}
@@ -339,24 +339,24 @@ package com.darcey.video
 		
 		public function seek(time:Number):void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.seek(time:"+time+")");
+			t.string("CustomEmbeddedVideoPlayer.seek(time:"+time+")");
 			ns.seek(time);
 		}
 		
 		public function resume():void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.resume()");
+			t.string("CustomEmbeddedVideoPlayer.resume()");
 			ns.resume();
 		}
 		
 		public function stop():void
 		{
 			if (ns){
-				t.ttrace("CustomEmbeddedVideoPlayer.stop()");
+				t.string("CustomEmbeddedVideoPlayer.stop()");
 				ns.pause();
 				ns.seek(0);
 			} else {
-				t.ttrace("CustomEmbeddedVideoPlayer.stop() error");
+				t.string("CustomEmbeddedVideoPlayer.stop() error");
 			}
 		}
 		
@@ -371,7 +371,7 @@ package com.darcey.video
 		
 		public function dispose():void
 		{
-			t.ttrace("CustomEmbeddedVideoPlayer.dispose()");
+			t.string("CustomEmbeddedVideoPlayer.dispose()");
 			new RemoveAllChildrenIn(this);
 			
 			try {

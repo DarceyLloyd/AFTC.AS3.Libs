@@ -41,7 +41,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(debug);
-			t.ttrace("Accelerometer()");
+			t.string("Accelerometer()");
 			
 			this.stage = stage;
 			supported = flash.sensors.Accelerometer.isSupported;
@@ -80,7 +80,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function updateHandler(e:AccelerometerEvent):void {
 			//myTextField.text = String("at: " + evt.timestamp + "\n" + "acceleration X: " + evt.accelerationX + "\n" + "acceleration Y: " + evt.accelerationY + "\n" + "acceleration Z: " + evt.accelerationZ);
-			//t.ttrace("Accelerometer.updateHandler(e): eX:" + e.accelerationX + "  eZ:" + e.accelerationZ + "  eY:" + e.accelerationY);
+			//t.string("Accelerometer.updateHandler(e): eX:" + e.accelerationX + "  eZ:" + e.accelerationZ + "  eY:" + e.accelerationY);
 			
 			
 			rx = e.accelerationX;
@@ -93,7 +93,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function dispose():void
 		{
-			t.ttrace("Accelerometer.dispose()");
+			t.string("Accelerometer.dispose()");
 			
 			try {
 				acc.removeEventListener(AccelerometerEvent.UPDATE, updateHandler);

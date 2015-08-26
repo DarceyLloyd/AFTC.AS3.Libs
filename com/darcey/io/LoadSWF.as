@@ -23,7 +23,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("LoadSWF()");
+			t.string("LoadSWF()");
 			
 			
 			ldr = new Loader();
@@ -34,7 +34,7 @@ package com.darcey.io
 		
 		public function load(url:String):void
 		{
-			t.ttrace("LoadSWF.load(url)");
+			t.string("LoadSWF.load(url)");
 			
 			var context:LoaderContext = new LoaderContext();
 			context.applicationDomain=ApplicationDomain.currentDomain;
@@ -50,7 +50,7 @@ package com.darcey.io
 		
 		private function onCompleteHandler(e:Event):void
 		{
-			t.ttrace("LoadSWF.onCompleteHandler(e)");
+			t.string("LoadSWF.onCompleteHandler(e)");
 			//dispatchEvent( new Event(Event.COMPLETE) );
 			dispatchEvent(e);
 			
@@ -66,7 +66,7 @@ package com.darcey.io
 		
 		public function removeEventListeners():void
 		{
-			t.ttrace("LoadSWF.removeEventListeners()");
+			t.string("LoadSWF.removeEventListeners()");
 			
 			try {
 				ldr.contentLoaderInfo.removeEventListener(Event.COMPLETE, onCompleteHandler);

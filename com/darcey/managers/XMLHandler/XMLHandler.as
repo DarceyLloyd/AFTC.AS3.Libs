@@ -9,11 +9,11 @@ d["config"] = que2.getContent("config");
 d["language"] = que2.getContent("language");
 x.init(d);
 
-//t.ttrace("config->default application language = " + x.getValueByID("config","default application language","node","config") );
-//t.ttrace("config->google analytics tracking code = " + x.getValueByID("config","google analytics tracking code","node","config") );
-//t.ttrace("language-item1 = " + x.getValueByID("language","item1","node") );
-//t.ttrace("language-option1 = " + x.getValueByID("language","option1","node","mainmenu") );
-//t.ttrace("language-option2 = " + x.getValueByID("language","option2","node","mainmenu") );
+//t.string("config->default application language = " + x.getValueByID("config","default application language","node","config") );
+//t.string("config->google analytics tracking code = " + x.getValueByID("config","google analytics tracking code","node","config") );
+//t.string("language-item1 = " + x.getValueByID("language","item1","node") );
+//t.string("language-option1 = " + x.getValueByID("language","option1","node","mainmenu") );
+//t.string("language-option2 = " + x.getValueByID("language","option2","node","mainmenu") );
 
 
 */
@@ -49,9 +49,9 @@ package com.darcey.managers.XMLHandler
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public function XMLHandler()
 		{
-			// Setup project custom t.ttracer
+			// Setup project custom t.stringr
 			t = new Ttrace(true);
-			t.ttrace("com.darcey.managers.xmlManager.XMLManager()");
+			t.string("com.darcey.managers.xmlManager.XMLManager()");
 		}
 		// ---------------------------------------------------------------------------------------------------------------------------
 		
@@ -65,13 +65,13 @@ package com.darcey.managers.XMLHandler
 			trace("#################################################################");
 			trace("#################################################################");
 			
-			t.ttrace("com.darcey.managers.xmlManager.XMLManager.init()");
+			t.string("com.darcey.managers.xmlManager.XMLManager.init()");
 			
 			// Var ini
 			this.xmlFiles = xmlFiles;
 			this.path = path;
 			
-			for (var i in xmlFiles){ t.ttrace(i); /* Gives us the key;*/ }
+			for (var i in xmlFiles){ t.string(i); /* Gives us the key;*/ }
 			
 			/*
 			xmlData = xmlFiles["config"];

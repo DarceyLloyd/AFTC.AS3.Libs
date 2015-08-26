@@ -45,7 +45,7 @@ package com.plantapledge.utils
 		{
 			// Setup class specific tracer
 			t = new Ttrace(true);
-			t.ttrace("DebugCamera3D(nStep)");
+			t.string("DebugCamera3D(nStep)");
 			
 			this.nStep= nStep;
 			
@@ -87,7 +87,7 @@ package com.plantapledge.utils
 			var msg:String = "";
 			msg = 'cX="' + Math.round(camera3D.x) + '" cY="' + Math.round(camera3D.y) + '" cZ="' + Math.round(camera3D.z);
 			msg + = 'cRX="' + Math.round(camera3D.rotationX) + '" cRY="' + Math.round(camera3D.rotationY) + '" cRZ="' + Math.round(camera3D.rotationZ);
-			t.ttrace(msg);
+			t.string(msg);
 		}
 		// ---------------------------------------------------------------------------------------------------------------------------
 		

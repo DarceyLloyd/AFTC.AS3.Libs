@@ -27,7 +27,7 @@ package com.darcey.air
 		{
 			// Setup class specific tracer
 			t = new Ttrace(true);
-			t.ttrace("RunExe(fileName, args)");
+			t.string("RunExe(fileName, args)");
 			
 			this.fileName = fileName;
 			

@@ -29,7 +29,7 @@ package com.darcey.video
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("CustomVideoPlayerClient()");
+			t.string("CustomVideoPlayerClient()");
 			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -40,16 +40,16 @@ package com.darcey.video
 		{
 			//trace("metadata: duration=" + info.duration + " framerate=" + info.framerate);
 			
-			t.ttrace("CustomVideoPlayerClient.onMetaData(info):");
+			t.string("CustomVideoPlayerClient.onMetaData(info):");
 			
 			width = parseInt(info["width"]);
 			height = parseInt(info["height"]);
 			duration = parseFloat(info["duration"]);
 			
 			for(var index:String in info) {				
-				t.ttrace("\t" + index + " = " + info[index]);
+				t.string("\t" + index + " = " + info[index]);
 			}
-			t.ttrace("--------------------------------------------------------------\n");
+			t.string("--------------------------------------------------------------\n");
 			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -65,7 +65,7 @@ package com.darcey.video
 			
 		public function onXMPData(o:Object):void 
 		{ 
-			t.ttrace("VideoPlayerCustomClient.onXMPData(o): ");
+			t.string("VideoPlayerCustomClient.onXMPData(o): ");
 			
 			/*
 			// Alternative to Meta - only use when needed (FP10+ only) - USE META FOR 9
@@ -107,8 +107,8 @@ package com.darcey.video
 		
 		public function onCuePoint(o:Object=null):void
 		{
-			t.ttrace("VideoPlayerCustomClient.onCuePoint(o): " + o);
-			t.ttrace("cuepoint: time=" + o.time + " name=" + o.name + " type=" + o.type);
+			t.string("VideoPlayerCustomClient.onCuePoint(o): " + o);
+			t.string("cuepoint: time=" + o.time + " name=" + o.name + " type=" + o.type);
 			
 			dispatchEvent( new CustomEvent("CuePoint",o) );
 		}  
@@ -117,11 +117,11 @@ package com.darcey.video
 		
 		public function onPlayStatus(e:Object):void
 		{
-			t.ttrace("VideoPlayerCustomClient.onPlayStatus(e): " + e);
-			t.ttrace(e.name + "\t" + e.time);
+			t.string("VideoPlayerCustomClient.onPlayStatus(e): " + e);
+			t.string(e.name + "\t" + e.time);
 			
 			for (var prop:* in e) {
-				t.ttrace("\t"+prop+":\t"+e[prop]);
+				t.string("\t"+prop+":\t"+e[prop]);
 			}
 			
 			if (e.code == "NetStream.Play.Complete"){

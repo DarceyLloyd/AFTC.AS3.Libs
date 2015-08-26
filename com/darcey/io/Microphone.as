@@ -77,7 +77,7 @@ package com.darcey.io
 			
 			// Setup class specific tracer
 			t = new Ttrace(debug);
-			t.ttrace("Microphone()");
+			t.string("Microphone()");
 			
 			this.stage = stage;
 		}
@@ -87,7 +87,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function connect(deviceIndex:Number):void
 		{
-			t.ttrace("Microphone.connect(deviceIndex:"+deviceIndex+")");
+			t.string("Microphone.connect(deviceIndex:"+deviceIndex+")");
 			
 			this.deviceIndex = deviceIndex;
 			mic = flash.media.Microphone.getMicrophone();
@@ -105,7 +105,7 @@ package com.darcey.io
 			mic.setLoopBack(loopBack);
 			
 			t.clear();
-			t.ttrace("Microphone.connect(deviceIndex:"+deviceIndex+"): mic = " + mic);
+			t.string("Microphone.connect(deviceIndex:"+deviceIndex+"): mic = " + mic);
 			
 			if (debug){
 				vt1 = new VTrace(mic,"activityLevel");
@@ -143,7 +143,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function triggerCompleteEventAtVolume(vol:Number):void
 		{
-			t.ttrace("Microphone.triggerCompleteEventAtVolume(vol:"+vol+")");
+			t.string("Microphone.triggerCompleteEventAtVolume(vol:"+vol+")");
 			triggerEventAtVolume = vol;
 			triggerCompleteEventAtVolumeEnabled = true;
 		}
@@ -158,11 +158,11 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function onSampleData(e:SampleDataEvent):void
 		{
-			//t.ttrace("Microphone.onSampleData(e): mic.activityLevel = " + mic.activityLevel);
+			//t.string("Microphone.onSampleData(e): mic.activityLevel = " + mic.activityLevel);
 			if (!connected){
 				connected = true;
 				dispatchEvent( new Event(Event.CONNECT) );
-				t.ttrace("Microphone.onSampleData(e): Mic connected and data being processed");
+				t.string("Microphone.onSampleData(e): Mic connected and data being processed");
 			} else {
 				//connected = false;
 				if (triggerCompleteEventAtVolumeEnabled){
@@ -176,7 +176,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function micStatusEventHandler(e:StatusEvent):void
 		{
-			t.ttrace("Microphone.micStatusEventHandler(e): e.code = " + e.code);
+			t.string("Microphone.micStatusEventHandler(e): e.code = " + e.code);
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -192,7 +192,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function iniUserConfig(e:Event):void
 		{
-			t.ttrace("Microphone.iniUserConfig(e)");
+			t.string("Microphone.iniUserConfig(e)");
 			
 			try {
 				this.removeEventListener(Event.CONNECT,iniUserConfig);
@@ -220,7 +220,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function calculateMedian(e:TimerEvent):void
 		{
-			//t.ttrace("Microphone.calculateMedian(e): mic.activityLevel = " + mic.activityLevel);
+			//t.string("Microphone.calculateMedian(e): mic.activityLevel = " + mic.activityLevel);
 			
 			if (!mic){ return; }
 			if (mic.activityLevel < 0){ return; }
@@ -258,7 +258,7 @@ package com.darcey.io
 				try {
 					stage.removeChild(txt);
 				} catch (e:Error) {}
-				t.ttrace("MIC TRIGGER VOLUME REACHED!");
+				t.string("MIC TRIGGER VOLUME REACHED!");
 				if (txt){
 					txt.text = "medianVol: " + medianVol.toFixed(2) + "    triggerEventAtVolume: " + triggerEventAtVolume.toFixed(2) + "\n" + mic.activityLevel.toFixed(2) + "/" + triggerEventAtVolume.toFixed(2) + " TRIGGER!";
 				}
@@ -283,7 +283,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function autoTriggerCompleteEventAfter(delayInSeconds:Number):void
 		{
-			t.ttrace("Microphone.autoTriggerCompleteEventAfter(delayInSeconds:"+delayInSeconds+")");
+			t.string("Microphone.autoTriggerCompleteEventAfter(delayInSeconds:"+delayInSeconds+")");
 			enableAutoTrigger = true;
 			autoTriggerAfter = delayInSeconds * 1000;
 			
@@ -293,7 +293,7 @@ package com.darcey.io
 		}
 		private function setupAutoTrigger():void
 		{
-			t.ttrace("Microphone.setupAutoTrigger()");
+			t.string("Microphone.setupAutoTrigger()");
 			
 			autoTriggerTimer = new Timer(autoTriggerAfter);
 			autoTriggerTimer.addEventListener(TimerEvent.TIMER,autoTriggerTimerEventHandler);
@@ -301,7 +301,7 @@ package com.darcey.io
 		}
 		private function autoTriggerTimerEventHandler(e:TimerEvent):void {
 			if (medianCalculationStarted){
-				t.ttrace("Microphone.autoTriggerTimerEventHandler(e)");
+				t.string("Microphone.autoTriggerTimerEventHandler(e)");
 				enableAutoTrigger = false;
 				autoTriggerTimer.stop();
 				autoTriggerTimer.removeEventListener(TimerEvent.TIMER,autoTriggerTimerEventHandler);
@@ -321,10 +321,10 @@ package com.darcey.io
 		public function listDevices():void
 		{
 			t.div();
-			t.ttrace("Microphone.listDevices()");
+			t.string("Microphone.listDevices()");
 			for (var index:* in flash.media.Microphone.names)
 			{
-				t.ttrace(index + ". " + flash.media.Microphone.names[index]);
+				t.string(index + ". " + flash.media.Microphone.names[index]);
 			}
 			t.div();
 		}

@@ -29,7 +29,7 @@ package com.darcey.managers.AssetHandler
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public function getAssetFromLoader(loader:Loader,libraryLinkageName:String):*
 		{
-			t.ttrace("getAssetClassFromLoader(loader, libraryLinkageName)");
+			t.string("getAssetClassFromLoader(loader, libraryLinkageName)");
 			////trace("e.target.loader.contentLoaderInfo.applicationDomain.getDefinition(s) = " + e.target.loader.contentLoaderInfo.applicationDomain.getDefinition("FLAmcBullet") );
 			var asset:*;
 			
@@ -50,8 +50,8 @@ package com.darcey.managers.AssetHandler
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public function getAssetClassFromLoaderMaxSWF(swfLoader:SWFLoader,libraryLinkageName:String):*
 		{
-			t.ttrace("AssetHandler.getAssetFromLoaderMaxSWF(swfLoader, libraryLinkageName)");
-			//t.ttrace("swfLoader.getClass(libraryLinkageName) = " + swfLoader.getClass(libraryLinkageName));
+			t.string("AssetHandler.getAssetFromLoaderMaxSWF(swfLoader, libraryLinkageName)");
+			//t.string("swfLoader.getClass(libraryLinkageName) = " + swfLoader.getClass(libraryLinkageName));
 			
 			return swfLoader.getClass(libraryLinkageName);
 		}

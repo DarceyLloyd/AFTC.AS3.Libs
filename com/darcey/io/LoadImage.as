@@ -37,7 +37,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(false);
-			t.ttrace("LoadImage()");
+			t.string("LoadImage()");
 		}
 		// ---------------------------------------------------------------------------------------------------------------------------
 		
@@ -49,7 +49,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public function intoSprite(sprite:Sprite,url:String,w:Number=-1,h:Number=-1):void
 		{
-			t.ttrace("LoadImage.intoSprite(sprite:"+sprite+", url:"+url+")");
+			t.string("LoadImage.intoSprite(sprite:"+sprite+", url:"+url+")");
 			
 			this.sprite = sprite;
 			this.url = url;
@@ -71,7 +71,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private function intoSpriteImageLoadedHandler(e:Event):void
 		{
-			t.ttrace("LoadImage.intoSpriteImageLoadedHandler(e)");
+			t.string("LoadImage.intoSpriteImageLoadedHandler(e)");
 			
 			try {
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, intoSpriteImageLoadedHandler);
@@ -100,7 +100,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		public function intoMovieClip(mc:MovieClip,url:String):void
 		{
-			t.ttrace("LoadImage.intoMovieClip(mc:"+mc+", url:"+url+")");
+			t.string("LoadImage.intoMovieClip(mc:"+mc+", url:"+url+")");
 			
 			this.mc = mc;
 			this.url = url;
@@ -118,7 +118,7 @@ package com.darcey.io
 		// ---------------------------------------------------------------------------------------------------------------------------
 		private function intoMovieClipImageLoadedHandler(e:Event):void
 		{
-			t.ttrace("LoadImage.intoSpriteImageLoadedHandler(e)");
+			t.string("LoadImage.intoSpriteImageLoadedHandler(e)");
 			
 			try {
 				loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, intoMovieClipImageLoadedHandler,false);

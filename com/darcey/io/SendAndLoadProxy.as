@@ -42,7 +42,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(showTrace);
-			t.ttrace("SendAndLoadProxy()");
+			t.string("SendAndLoadProxy()");
 			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -52,7 +52,7 @@ package com.darcey.io
 		public function sendAndLoad(script:String,vars:Object,method:String="post",varFormat:String="variables"):void
 		{
 			t.div();
-			t.ttrace("SendAndLoadProxy.sendAndLoad(script:"+script+", vars:"+vars+", method:"+method+", varFormat:"+varFormat+")");
+			t.string("SendAndLoadProxy.sendAndLoad(script:"+script+", vars:"+vars+", method:"+method+", varFormat:"+varFormat+")");
 			
 			loader = new URLLoader;
 			urlreq = new URLRequest(script);
@@ -87,7 +87,7 @@ package com.darcey.io
 			for (var index:String in vars){
 				urlvars[index] = vars[index];
 				//trace(index + " = " + vars[index]);
-				t.ttrace("SendAndLoadProxy.sendAndLoad() vars: " + index + " = " + vars[index]);
+				t.string("SendAndLoadProxy.sendAndLoad() vars: " + index + " = " + vars[index]);
 			}
 			
 			
@@ -125,7 +125,7 @@ package com.darcey.io
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function securityErrorHandler(e:SecurityErrorEvent):void {
-			t.ttrace("SendAndLoadProxy.securityErrorHandler(e): " + e);
+			t.string("SendAndLoadProxy.securityErrorHandler(e): " + e);
 			
 			removeEventListeners();
 			
@@ -143,22 +143,22 @@ package com.darcey.io
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function httpStatusHandler(e:HTTPStatusEvent):void {
-			t.ttrace("SendAndLoadProxy.httpStatusHandler(e): e = " + e);
-			t.ttrace("SendAndLoadProxy.httpStatusHandler(e): status = " + e.status);
+			t.string("SendAndLoadProxy.httpStatusHandler(e): e = " + e);
+			t.string("SendAndLoadProxy.httpStatusHandler(e): status = " + e.status);
 			//removeEventListeners();
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function openHandler(e:Event):void {
-			t.ttrace("SendAndLoadProxy.openHandler(e): " + e);
+			t.string("SendAndLoadProxy.openHandler(e): " + e);
 			//removeEventListeners();
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function progressHandler(e:ProgressEvent):void {
-			t.ttrace("SendAndLoadProxy.progressHandler(e): Loaded = " + e.bytesTotal.toFixed(1) + "/" + e.bytesLoaded.toFixed(1));
+			t.string("SendAndLoadProxy.progressHandler(e): Loaded = " + e.bytesTotal.toFixed(1) + "/" + e.bytesLoaded.toFixed(1));
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
@@ -168,7 +168,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function completeHandler(e:Event):void
 		{
-			t.ttrace("SendAndLoadProxy.completeHandler(e)");
+			t.string("SendAndLoadProxy.completeHandler(e)");
 			
 			removeEventListeners();
 			
@@ -178,16 +178,16 @@ package com.darcey.io
 			
 			switch(responseURLLoader.dataFormat) {
 				case URLLoaderDataFormat.TEXT :
-					t.ttrace("SendAndLoadProxy.completeHandler(e): Data format = TEXT");
-					t.ttrace("\t" + responseURLLoader.data);
+					t.string("SendAndLoadProxy.completeHandler(e): Data format = TEXT");
+					t.string("\t" + responseURLLoader.data);
 					break;
 				case URLLoaderDataFormat.BINARY :
-					t.ttrace("SendAndLoadProxy.completeHandler(e): Data format = BINARY");
-					t.ttrace("\t" + responseURLLoader.data);
+					t.string("SendAndLoadProxy.completeHandler(e): Data format = BINARY");
+					t.string("\t" + responseURLLoader.data);
 					break;
 				case URLLoaderDataFormat.VARIABLES :
-					t.ttrace("SendAndLoadProxy.completeHandler(e): Data format = VARIABLES");
-					t.ttrace("\t" + unescape(responseURLLoader.data));
+					t.string("SendAndLoadProxy.completeHandler(e): Data format = VARIABLES");
+					t.string("\t" + unescape(responseURLLoader.data));
 					break;
 			}
 			
@@ -199,7 +199,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function removeEventListeners():void
 		{
-			t.ttrace("SendAndLoadProxy.removeEventListeners()");
+			t.string("SendAndLoadProxy.removeEventListeners()");
 			
 			try {
 				loader.removeEventListener(Event.COMPLETE, completeHandler);
@@ -232,7 +232,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function dispose():void
 		{
-			t.ttrace("SendAndLoadProxy.dispose()");
+			t.string("SendAndLoadProxy.dispose()");
 			
 			removeEventListeners();
 			

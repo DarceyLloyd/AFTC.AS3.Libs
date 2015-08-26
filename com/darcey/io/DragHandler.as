@@ -37,7 +37,7 @@ package com.darcey.io
 		{
 			// Setup class specific tracer
 			t = new Ttrace(debug);
-			t.ttrace("DragHandler()");
+			t.string("DragHandler()");
 			
 			
 			t.div();
@@ -67,7 +67,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function attachListeners():void
 		{
-			t.ttrace("DragHandler.attachListeners()");
+			t.string("DragHandler.attachListeners()");
 			
 			target.buttonMode = true;
 			target.useHandCursor = true;
@@ -93,7 +93,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function mouseDownHandler(e:MouseEvent):void
 		{
-			t.ttrace("DragHandler.mouseDownHandler(e)");
+			t.string("DragHandler.mouseDownHandler(e)");
 			
 			target.startDrag(lockCenter,rect);
 			target.addEventListener(MouseEvent.MOUSE_MOVE,mouseMoveHandler);
@@ -104,7 +104,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		private function mouseUpHandler(e:MouseEvent):void
 		{
-			t.ttrace("DragHandler.mouseUpHandler(e)");
+			t.string("DragHandler.mouseUpHandler(e)");
 			
 			target.stopDrag();
 			try {
@@ -118,7 +118,7 @@ package com.darcey.io
 		private function mouseMoveHandler(e:MouseEvent=null):void
 		{
 			if (debug){
-				t.ttrace("x:" + target.x + " y:" + target.y);
+				t.string("x:" + target.x + " y:" + target.y);
 			}
 			
 			if (targetArea){
@@ -148,7 +148,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function detachListeners():void
 		{
-			t.ttrace("DragHandler.detachListeners()");
+			t.string("DragHandler.detachListeners()");
 			
 			try {
 				target.removeEventListener(MouseEvent.MOUSE_DOWN,mouseDownHandler);
@@ -186,7 +186,7 @@ package com.darcey.io
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function dispose():void
 		{
-			t.ttrace("DragHandler.dispose()");
+			t.string("DragHandler.dispose()");
 			
 			detachListeners();
 			

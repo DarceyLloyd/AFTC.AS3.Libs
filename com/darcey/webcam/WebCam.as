@@ -26,7 +26,7 @@ package com.darcey.webcam
 		{
 			// Setup class specific tracer
 			t = new Ttrace(debug);
-			t.ttrace("WebCam()");
+			t.string("WebCam()");
 			
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -60,7 +60,7 @@ package com.darcey.webcam
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function getCamera():Video
 		{
-			t.ttrace("WebCam.getCamera()");
+			t.string("WebCam.getCamera()");
 			
 			video = new Video();
 			video.attachCamera(camera);
@@ -73,7 +73,7 @@ package com.darcey.webcam
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function dispose():void
 		{
-			t.ttrace("WebCam.dispose()");
+			t.string("WebCam.dispose()");
 			
 			video = null;
 			camera = null;
