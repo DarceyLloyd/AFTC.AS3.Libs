@@ -30,6 +30,7 @@ package com.darcey.video
 		public var nc:NetConnection = new NetConnection();
 		public var ns:NetStream;
 		public var video:Video;
+		public var repeat:Boolean = false;
 		
 		public var src:String = "";
 		private var vw:Number = 640;
@@ -63,6 +64,7 @@ package com.darcey.video
 			vw = videoW;
 			vh = videoH;
 			this.autoPlay = autoPlay;
+			this.repeat = repeat;
 			
 			video = new Video(vw,vh);
 			addChild(video);
@@ -109,6 +111,11 @@ package com.darcey.video
 				case "NetStream.Play.Stop":
 					t.string("CustomVideoPlayer.netStatusHandler(event): Playback complete");
 					dispatchEvent( new Event( Event.COMPLETE ) );
+					if (repeat){
+						t.string("CustomVideoPlayer.netStatusHandler(event): repeat = true, attempting to restart video!");
+						ns.seek(0);
+						ns.resume();
+					}
 					break;
 				default:
 					t.string("CustomVideoPlayer.netStatusHandler(event): code = " + event.info.code);
