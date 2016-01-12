@@ -105,7 +105,7 @@ package com.darcey.debug
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public function clear():void { log.clear(); }
-		public function dispose():void { log.clear(); log.dispose; log = null; }
+		public function dispose():void { enabled = false; log.clear(); log.dispose; log = null; }
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		

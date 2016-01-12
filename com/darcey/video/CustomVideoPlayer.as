@@ -54,7 +54,7 @@ package com.darcey.video
 		public function CustomVideoPlayer(stageRef:Stage,src:String,videoW:Number=640,videoH:Number=480,autoPlay:Boolean=false,repeat:Boolean=true)
 		{
 			// Setup class specific tracer
-			t = new Ttrace(true);
+			t = new Ttrace(false);
 			t.string("CustomVideoPlayer(stageRef:"+stageRef+",src:"+src+", videoW:"+videoW+", videoH:"+videoH+",autoPlay:" + autoPlay + ",repeat:" + repeat + ")");
 			
 			
@@ -106,15 +106,25 @@ package com.darcey.video
 					connectStream();
 					break;
 				case "NetStream.Play.StreamNotFound":
-					t.string("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
+					t.warn("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
+					if (!t.enabled){
+						trace("###############################################################################");
+						trace("CustomVideoPlayer.netStatusHandler(event): Stream not found: " + src);
+						trace("###############################################################################");
+					}
 					break;
 				case "NetStream.Play.Stop":
 					t.string("CustomVideoPlayer.netStatusHandler(event): Playback complete");
 					dispatchEvent( new Event( Event.COMPLETE ) );
 					if (repeat){
+						/*
+						t.enabled = true;
+						t.ttrace("CustomVideoPlayer.netStatusHandler(event): repeat = " + repeat);
 						t.string("CustomVideoPlayer.netStatusHandler(event): repeat = true, attempting to restart video!");
-						ns.seek(0);
-						ns.resume();
+						*/
+						//ns.seek(0.01);
+						//ns.resume();
+						ns.play(src);
 					}
 					break;
 				default:

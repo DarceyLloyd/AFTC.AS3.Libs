@@ -450,7 +450,7 @@ package com.darcey.utils
 			for (var i:uint = 0; i < sourceSplit.length; i++)
 			{
 				//trace(sourceSplit[i]);
-				if (isInString(sourceSplit[i],paramater))
+				if (inString(sourceSplit[i],paramater))
 				{
 					indexFound = i;
 				}
@@ -472,7 +472,17 @@ package com.darcey.utils
 		
 		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-		public static function isInString(source:String,find:String):Boolean
+		public static function inStringCount(source:String, find:String ):int
+		{
+			return source.split(find).length - 1;
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function inString(source:String,find:String):Boolean
 		{
 			if (source.indexOf(find) == -1)
 			{
