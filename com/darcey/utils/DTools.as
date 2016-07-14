@@ -30,6 +30,42 @@ package com.darcey.utils
 	// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public class DTools
 	{
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function removeChildByName(container:*,name:String):void
+		{
+			var childName:String = "";
+			var childFound:Boolean = false;
+			
+			try {
+				
+				if (container!= null && container.numChildren > 0){
+					for (var i:int = 0; i < (container.numChildren); i++)
+					{
+						try {
+							childName = container.getChildAt(i).name;
+							//trace("\t" + "childAt("+i+"): name = " + childName + "\t\t" + container.getChildAt(i));
+							
+							if (childName == name){
+								childFound = true;
+								container.removeChildAt(i);
+							}
+						} catch (e:Error) { 
+							childName = ""; 
+						}
+					}
+					
+					if (!childFound){
+						trace("### ERROR: DTOOLS.removeChildByName failed! Unable to find [" + name + "] in container:[" + container + "] children");
+					}
+				}
+			} catch (e:Error) {
+				trace("### ERROR: DTOOLS.removeChildByName failed! [" + e + "]");
+			}
+		}
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function arrayRemoveLastIndex(arr:Array):void
 		{
@@ -136,10 +172,27 @@ package com.darcey.utils
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function randomNumber(min:Number, max:Number):Number
 		{
+			//var r:Number = min + Math.floor(Math.random()*(max-min));
+			//return r;
 			return Math.floor(Math.random() * (1 + max - min) + min);	
 		}
 		public static function getRandomNumber(min:Number, max:Number):Number { return randomNumber(min,max); }
 		public static function generateRandomNumber(min:Number, max:Number):Number { return randomNumber(min,max); }
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		
+		
+		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		public static function randomFloat(min:Number, max:Number):Number
+		{
+			var r:Number = min + (Math.random()*(max-min));
+			// 100 for min 0 and max 1 to give approx 10 to 15 mins and maxes in every 1000
+			r = Math.round(r * 100);
+			r = r/100;
+			return r;
+			//return Math.random() * (1 + max - min) + min;	
+		}
+		public static function getRandomFloat(min:Number, max:Number):Number { return randomFloat(min,max); }
+		public static function generateRandomFloat(min:Number, max:Number):Number { return randomFloat(min,max); }
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		
 		
@@ -190,7 +243,8 @@ package com.darcey.utils
 		{
 			try {
 			if (s.displayState == StageDisplayState.NORMAL) {
-				s.displayState=StageDisplayState.FULL_SCREEN;
+				//s.displayState=StageDisplayState.FULL_SCREEN;
+				s.displayState=StageDisplayState.FULL_SCREEN_INTERACTIVE;
 			} else {
 				s.displayState=StageDisplayState.NORMAL;
 			}
@@ -260,7 +314,6 @@ package com.darcey.utils
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 		public static function traceChildrenIn(target:*):void
 		{
-			trace("\n");
 			trace("DTools.traceChildrenIn(target:"+target+"): target.numChildren = " + target.numChildren);
 			
 			
@@ -268,15 +321,15 @@ package com.darcey.utils
 				for (var i:Number = 0; i <= target.numChildren-1; i++)
 				{
 					try {
-						trace("#### DTOOLS: traceChildrenIn(): index ["+i+"] getChildAt["+i+"] =  [" + target.getChildAt(i) + "] name: [" + target.getChildAt(i).name + "]");
+						trace("DTools: traceChildrenIn(): index ["+i+"] getChildAt["+i+"] =  [" + target.getChildAt(i) + "] name: [" + target.getChildAt(i).name + "]");
 					} catch (e:Error) {
-						trace("#### DTOOLS: ERROR: traceChildrenIn(): at index ["+i+"]");
+						trace("#### DTools: ERROR: traceChildrenIn(): at index ["+i+"]");
 						target.visible = true;
 					}
 				}
 				
 			} catch (e:Error) {
-				trace("#### DTOOLS: ERROR: traceChildrenIn(): Unable to trace children in " + target);
+				trace("#### DTools: ERROR: traceChildrenIn(): Unable to trace children in " + target);
 			}
 		}
 		// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
