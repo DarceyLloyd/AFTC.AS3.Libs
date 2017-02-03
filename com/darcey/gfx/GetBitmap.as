@@ -5,6 +5,7 @@ package com.darcey.gfx
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.display.BlendMode;
 	import flash.display.DisplayObject;
 
 	// -------------------------------------------------------------------------------------------------------------------------------
@@ -35,10 +36,10 @@ package com.darcey.gfx
 			if (w==0 || h == 0){
 				bmpData = new BitmapData( target.width, target.height );
 			} else {
-				bmpData = new BitmapData( w, h );
+				bmpData = new BitmapData( w, h,true,0x00000000 );
 			}
 			
-			bmpData.draw(target);
+			bmpData.draw(target,null,null,BlendMode.NORMAL,null,true);
 			bmp = new Bitmap(bmpData);
 			return bmp;
 		}
